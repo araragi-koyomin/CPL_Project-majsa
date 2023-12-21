@@ -21,29 +21,19 @@
 
 ## 检验牌型阶段
 
-1. 已立直
-   1. 检验手牌区和牌型
-      1. 和牌型 $AgariChecker.c/h$
-         - 若$status.currentPlayer$为$KAMICHA, TOIMEN, SHIMOCHA$，检验振听
-           - 振听 --> **面听数计算**，$result->type = FURITEN$
-           - 未振 --> **和牌计算**，$result->type = RON/TSUMO$
-         - **和牌计算**，$result->type = RON/TSUMO$
-      2. 听牌
-         1. 振听 --> 振了：$result->type = FURITEN$，未振：$result->type = TENPAI$
-         2. **面听数计算**
-2. 未立直
-   1. 检验手牌区与副露区和牌型
-      - 和牌型 $AgariChecker.c/h$
-         - 若$status.currentPlayer$为$KAMICHA, TOIMEN, SHIMOCHA$，检验振听
-           - 振听 --> **面听数计算**，$result->type = FURITEN$
-           - 未振
-             - 有役 --> **和牌计算**，$result->type = RON/TSUMO$
-             - 无役 --> **面听数计算**，$result->type = TENPAI$
-         - **和牌计算**，$result->type = RON/TSUMO$
-      - 听牌
-         1. 振听 --> 振了：$result->type = FURITEN$，未振：$result->type = TENPAI$
-         2. **面听数计算**
-      - 未听牌 --> **向听数计算**，$result->type = NOTEN$
+1. 检验手牌区与副露区和牌型
+   - 和牌型 $AgariChecker.c/h$
+      - 若$status.currentPlayer$为$KAMICHA, TOIMEN, SHIMOCHA$，检验振听
+         - 振听 --> **面听数计算**，$result->type = FURITEN$
+         - 未振
+            - 有役 --> **和牌计算**，$result->type = RON/TSUMO$
+            - 未立直
+               - 无役 --> **面听数计算**，$result->type = TENPAI$
+      - **和牌计算**，$result->type = RON/TSUMO$
+   - 听牌
+      1. 振听 --> 振了：$result->type = FURITEN$，未振：$result->type = TENPAI$
+      2. **面听数计算**
+   - 未听牌 --> **向听数计算**，$result->type = NOTEN$
 
 ## 和牌计算
 

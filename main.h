@@ -1,4 +1,5 @@
 #include "BasicType.h"
+#include <stdbool.h>
 
 struct status {
     KazeType bakaze;       // 场风
