@@ -1,13 +1,13 @@
 #include "main.h"
 
-void AgariCheck(int isRiichi, char handTile[], char currentTile[], Group groupTile[], char discardTile[], bool isRinshan, int remainTileCount, KazeType bakaze, KazeType jikaze, Player currentPlayer);
+void AgariCheck(Status status, int handTile1[], int discardTile1[], int currentTile1, int uradora1[], int dora1[], GroupInt groupTile1[]);
 
-bool IsRiichi(int isRiichi);
+bool IsRiichi(Status status);
 
-bool IsAgari(char handTile[], char currentTile[], Group groupTile[]);
+bool IsAgari(Status status, int handTile1[], int discardTile1[], int currentTile1, int uradora1[], int dora1[], GroupInt groupTile1[]);
 
-bool IsTenpai(char handTile[], Group groupTile[]);
+bool IsTenpai(Status status, int handTile1[], int discardTile1[], int currentTile1, int uradora1[], int dora1[], GroupInt groupTile1[]);
 
-bool IsFuriten(char discardTile[], char handTile[], Group groupTile[]);
+bool IsFuriten(Status status, int handTile1[], int discardTile1[], int currentTile1, int uradora1[], int dora1[], GroupInt groupTile1[]);
 
-bool NoYaku(char handTile[], char currentTile[], Group groupTile[], bool isRinshan, int remainTileCount, KazeType bakaze, KazeType jikaze, Player currentPlayer);
+bool NoYaku(Status status, int handTile1[], int discardTile1[], int currentTile1, int uradora1[], int dora1[], GroupInt groupTile1[]);

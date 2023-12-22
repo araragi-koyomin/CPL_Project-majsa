@@ -1,5 +1,7 @@
 #include <Trans.h>
 
+/// @brief 将手牌、进张、舍牌、副露、（里）宝牌转化为枚举结构
+/// @param status 
 void HaiTrans(Status status) {
     for (int i = 0; i < strlen(status.handTile); i += 2) {
         if (status.handTile[i] == '0') {
@@ -86,4 +88,5 @@ void HaiTrans(Status status) {
         else if (status.currentTile[i + 1] == 's') currentTile1 = status.currentTile[i] - '1' + is;
         else if (status.currentTile[i + 1] == 'z') currentTile1 = status.currentTile[i] - '1' + east;
     }
+    handTile1[14] = currentTile1;
 }

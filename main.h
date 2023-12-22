@@ -30,3 +30,5 @@ struct result {
     int shanten;      // 向听数
 };
 typedef struct result Result;
+
+extern Result *result;

@@ -1,8 +1,10 @@
+/// @brief 风的类型
 enum kazetype {
     TON = 1, NAN, SHAA, PEI
 };
 typedef enum kazetype KazeType;
 
+/// @brief 副露区类型与牌
 enum fulutype {
     Shuntsu = 1, Koutsu, Kantsu, Ankan
 }; 
@@ -26,17 +28,24 @@ enum player {
 };
 typedef enum player Player;
 
+/// @brief 牌局结果
 enum resulttype {
     RON, TSUMO, TENPAI, FURITEN, NOTEN
 };
 typedef enum resulttype ResultType;
 
 enum yakulist {
-    Menzenchintsumohou, Riichi, Ippatsu, Pinfu, Iipeikou, Haiteiraoyue, Houteiraoyui, Rinshankaihou, Chankan, Tanyao, Ton, Nan, Shaa, Pei, Haku, Hatsu, Chun,
+    // 一番
+    Menzenchintsumohou, Riichi, Ippatsu, Pinfu, Iipeikou, Haiteiraoyue, Houteiraoyui, Rinshankaihou, Tanyao, Ton, Nan, Shaa, Pei, Haku, Hatsu, Chun,
+    // 二番
     Doubleriichi, Chantaiyao, Sanshoukudoujun, Ittsu, Toitoi, Sanankou, Sanshokudoukou, Sankantsu, Chiitoitsu, Honroutou, Shousangen,
+    // 三番
     Honitsu, Junchantaiyao, Ryanpeikou,
+    // 六番
     Chinitsu,
+    // 役满
     Koukushimusou, Suuankou, Daisangen, Shousuushii, Tsuiisou, Chinroutou, Ryuuiisou, Chuurenpoutou, Suukantsu, Tenhou, Chiihou,
+    // 双倍役满
     Kokushijuusanmenmachi, Suuankoutanki, Daisuushii, Junseichuurenpoutou
 };
 typedef enum yakulist Yaku;
