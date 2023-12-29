@@ -1,13 +1,23 @@
 #include "main.h"
 
-void AgariCheck(Status status, int handTile1[], int discardTile1[], int currentTile1, int uradora1[], int dora1[], GroupInt groupTile1[]);
-
 bool IsRiichi(Status status);
 
-bool IsAgari(Status status, int handTile1[], int discardTile1[], int currentTile1, int uradora1[], int dora1[], GroupInt groupTile1[]);
+bool AgariCheck(Status status, int *handTile1, int *discardTile1, int currentTile1, GroupInt *groupTile1);
 
-bool IsTenpai(Status status, int handTile1[], int discardTile1[], int currentTile1, int uradora1[], int dora1[], GroupInt groupTile1[]);
+bool IsAgari(int handTile1[], int needMentsu, const int *discardTile1, const int currentTile1, const Status status);
 
-bool IsFuriten(Status status, int handTile1[], int discardTile1[], int currentTile1, int uradora1[], int dora1[], GroupInt groupTile1[]);
+bool IsFuritenInAgari(const int *discardTile1, const int currentTile1, Status status);
 
-bool NoYaku(Status status, int handTile1[], int discardTile1[], int currentTile1, int uradora1[], int dora1[], GroupInt groupTile1[]);
+bool IsMenzenchin(Status status);
+
+bool IsChiitoitsuHai(const int *handTile1);
+
+int IsKoukushimusou(const int *handTile1, int currentTile1);
+
+bool FindShuntsu(int handTile1[], int index, int mentsu, const int *discardTile1, const int currentTile1, const Status status, const int bucket[]);
+
+bool FindKoutsu(int handTile1[], int index, int mentsu, const int *discardTile1, const int currentTile1, const Status status, const int bucket[]);
+
+bool IsTennpai(int mentsu, int *discardTile1, int currentTile1, Status status, int handTile1[], const int bucket[]);
+
+void FindMinusShanten();

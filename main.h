@@ -1,5 +1,12 @@
 #include "BasicType.h"
 #include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#include <assert.h>
+#include <limits.h>
+#include <math.h>
+#include <stdio.h>
 
 struct status {
     KazeType bakaze;       // 场风
@@ -31,4 +38,4 @@ struct result {
 };
 typedef struct result Result;
 
-extern Result *result;
+ Result *result;

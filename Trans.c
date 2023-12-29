@@ -88,5 +88,5 @@ void HaiTrans(Status status) {
         else if (status.currentTile[i + 1] == 's') currentTile1 = status.currentTile[i] - '1' + is;
         else if (status.currentTile[i + 1] == 'z') currentTile1 = status.currentTile[i] - '1' + east;
     }
-    handTile1[14] = currentTile1;
+    handTile1[13] = currentTile1;
 }

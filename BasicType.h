@@ -55,7 +55,7 @@ enum hailist {
 };
 typedef enum hailist HaiList;
 
-int handTile1[15], discardTile1[30], currentTile1, uradora1[6], dora1[6];
+int handTile1[14], discardTile1[30], currentTile1, uradora1[6], dora1[6];
 
 int Fan, Dora, Fu;
 
