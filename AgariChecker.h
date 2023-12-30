@@ -18,6 +18,8 @@ bool FindShuntsu(int handTile1[], int index, int mentsu, const int *discardTile1
 
 bool FindKoutsu(int handTile1[], int index, int mentsu, const int *discardTile1, const int currentTile1, const Status status, const int bucket[]);
 
-bool IsTennpai(int mentsu, int *discardTile1, int currentTile1, Status status, int handTile1[], const int bucket[]);
+bool Is41Tennpai(int mentsu, int *discardTile1, int currentTile1, Status status, int handTile1[], const int bucket[]);
+
+bool Is7gTennpai(const int handTile1[], const int *discardTile1, const int currentTile1, const Status status);
 
 void FindMinusShanten();

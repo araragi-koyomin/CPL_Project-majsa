@@ -145,7 +145,8 @@ bool IsRiichi(Status status)
 bool AgariCheck(Status status, int *handTile1, int *discardTile1, int currentTile1, GroupInt *groupTile1) {
     // 我们知道，麻将胡牌型为 4面子 + 1对子 / 7对子 / 国士无双，我们接下来将对这三种情况进行判断
     // 首先从 门前清（不含暗杠） 与 副露 两种状态进行判断
-    if (IsMenzenchin(status)) {
+    int ismenzenchin = IsMenzenchin(status);
+    if (ismenzenchin) {
         // 七对子判断
         if (IsChiitoitsuHai(handTile1)) {
             // 判断振听。若振听，结果类型为FURUTEN，返回false
@@ -186,6 +187,12 @@ bool AgariCheck(Status status, int *handTile1, int *discardTile1, int currentTil
                     return false;
                 }
                 return true;
+            }
+        } else if (ismenzenchin){
+            // 检验是否七对听牌或国士无双听牌
+            if (!Is7gTennpai(handTile1, discardTile1, currentTile1, status)) {
+                // 计算向听数
+                
             }
         }
     }
@@ -301,13 +308,13 @@ bool FindShuntsu(int handTile1[], int index, int mentsu, const int *discardTile1
     }
     bool CanFind = FindShuntsu(handTile1, index + 1, mentsu + 1, discardTile1, currentTile1, status, bucket);
     // 检验是否听牌型
-    int IsTen = IsTennpai(mentsu, discardTile1, currentTile1, status, handTile1, bucket);
+    int IsTen = Is41Tennpai(mentsu, discardTile1, currentTile1, status, handTile1, bucket);
     if (flag) 
         handTile1[i1] = value1, handTile1[i2] = value2, handTile1[i3] = value3;
     if (CanFind) return true;
     CanFind = FindKoutsu(handTile1, index + 1, mentsu + 1, discardTile1, currentTile1, status, bucket);
     // 检验是否听牌型
-    IsTen += IsTennpai(mentsu, discardTile1, currentTile1, status, handTile1, bucket);
+    IsTen += Is41Tennpai(mentsu, discardTile1, currentTile1, status, handTile1, bucket);
     if (flag) 
         handTile1[i1] = value1, handTile1[i2] = value2, handTile1[i3] = value3;
     if (CanFind) return true;
@@ -340,14 +347,14 @@ bool FindKoutsu(int handTile1[], int index, int mentsu, const int *discardTile1,
     }
     bool CanFind = FindShuntsu(handTile1, index + 1, mentsu + 1, discardTile1, currentTile1, status, bucket);
     // 判断是否听牌
-    IsTennpai(mentsu, discardTile1, currentTile1, status, handTile1, bucket);
+    Is41Tennpai(mentsu, discardTile1, currentTile1, status, handTile1, bucket);
     if (flag) {
         handTile1[index] = value1, handTile1[index + 1] = value2, handTile1[index + 2] = value3;
     }
     if (CanFind) return true;
     CanFind = FindKoutsu(handTile1, index + 1, mentsu + 1, discardTile1, currentTile1, status, bucket);
     // 判断是否听牌
-    IsTennpai(mentsu, discardTile1, currentTile1, status, handTile1, bucket);
+    Is41Tennpai(mentsu, discardTile1, currentTile1, status, handTile1, bucket);
     if (flag) {
         handTile1[index] = value1, handTile1[index + 1] = value2, handTile1[index + 2] = value3;
     }
@@ -356,18 +363,18 @@ bool FindKoutsu(int handTile1[], int index, int mentsu, const int *discardTile1,
     return false;
 }
 
-int Cmp(const void *a,const void *b) {
+int Cmp(const void *a, const void *b) {
 	return *(int*)a-*(int*)b;
 }
 
-/// @brief 检验是否听牌
+/// @brief 检验是否4 + 1听牌
 /// @param mentsu 
 /// @param discardTile1 
 /// @param currentTile1 
 /// @param status 
 /// @param handTile1 
 /// @return 听牌返回true， 未听返回false
-bool IsTennpai(int mentsu, int *discardTile1, int currentTile1, Status status, int handTile1[], const int bucket[]) {
+bool Is41Tennpai(int mentsu, int *discardTile1, int currentTile1, Status status, int handTile1[], const int bucket[]) {
     bool flag = false;
     if (mentsu != 3) return false;
     int nokoru[3], index = 0;
@@ -440,10 +447,113 @@ bool IsTennpai(int mentsu, int *discardTile1, int currentTile1, Status status, i
         }
     }
     // 总结
-    if ((result->type != FURITEN || result->type != RON || result->type != TSUMO) && flag) {
+    if (result->type != FURITEN && result->type != RON && result->type != TSUMO && flag) {
         result->type = TENPAI;
         return true;
     }
+    return false;
+}
+
+/// @brief 检验是否七对或国士无双听牌
+/// @param handTile1 
+/// @param discardTile1 
+/// @param currentTile1 
+/// @param status 
+/// @return 听了返回true，没听返回false
+bool Is7gTennpai(const int handTile1[], const int *discardTile1, const int currentTile1, const Status status) {
+    // 七对
+    int bucket[zhong + 1] = {0}, count = 0, flag = 0;
+    for (int i = 0; i < 14; i++) {
+        bucket[handTile1[i]]++;
+        if (bucket[handTile1[i]] == 2) {
+            count++;
+        }
+    }
+    if (count == 5) {
+        for (int i = 0; i < 14; i++) {
+            if (bucket[handTile1[i]] % 2 == 1) {
+                for (int j = 0; j < sizeof(discardTile1) / sizeof(discardTile1[0]); j++) {
+                    if (discardTile1[j] == handTile1[i]) {
+                        if (result->type != TENPAI && result->type != RON && result->type != TSUMO) {
+                            result->type = FURITEN;
+                            return true;
+                        }
+                    }
+                } 
+            }
+        }
+        if (result->type != FURITEN || result->type != RON || result->type != TSUMO) {
+            result->type = TENPAI;
+            return true;
+        }
+    }
+    // 国士无双
+    memset(bucket, 0, zhong + 1);
+    count = 0;
+    for (int i = 0; i < 14; i++) {
+        if (handTile1[i] == im || handTile1[i] == km || handTile1[i] == ip || handTile1[i] == kp || handTile1[i] == is || handTile1[i] == ks ||
+            handTile1[i] == east || handTile1[i] == south || handTile1[i] == west || handTile1[i] == north || 
+            handTile1[i] == bai || handTile1[i] == fa || handTile1[i] == zhong) {
+            bucket[handTile1[i]]++;
+            count++;
+            }
+    }
+    if (count == 13) {
+        for (int i = 0; i < sizeof(discardTile1) / sizeof(discardTile1[0]); i++) {
+            if (discardTile1[i] == im || discardTile1[i] == km || discardTile1[i] == ip || discardTile1[i] == kp || discardTile1[i] == is || discardTile1[i] == ks ||
+                discardTile1[i] == east || discardTile1[i] == south || discardTile1[i] == west || discardTile1[i] == north || 
+                discardTile1[i] == bai || discardTile1[i] == fa || discardTile1[i] == zhong) {
+                    if (result->type != TENPAI && result->type != RON && result->type != TSUMO) {
+                        result->type = FURITEN;
+                        return true;
+                    }
+                }
+        }
+        if (result->type != FURITEN || result->type != RON || result->type != TSUMO) {
+            result->type = TENPAI;
+            return true;
+        }
+    }
+    if (count == 12) {
+        for (int i = 0; i < 2; i++) {
+            if (!bucket[im + 9 * i]) {
+                for (int j = 0; j < sizeof(discardTile1) / sizeof(discardTile1[0]); j++) {
+                    if (bucket[im + 9 * i] == discardTile1[j]) {
+                        if (result->type != TENPAI && result->type != RON && result->type != TSUMO) {
+                            result->type = FURITEN;
+                            return true;
+                        }
+                    }
+                }
+            } else if (!bucket[km + 9 * i]) {
+                for (int j = 0; j < sizeof(discardTile1) / sizeof(discardTile1[0]); j++) {
+                    if (bucket[im + 9 * i] == discardTile1[j]) {
+                        if (result->type != TENPAI && result->type != RON && result->type != TSUMO) {
+                            result->type = FURITEN;
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        for (int i = east; i <= zhong; i++) {
+            if (!bucket[i]) {
+                for (int j = 0; j < sizeof(discardTile1) / sizeof(discardTile1[0]); j++) {
+                    if (bucket[i] == discardTile1[j]) {
+                        if (result->type != TENPAI && result->type != RON && result->type != TSUMO) {
+                            result->type = FURITEN;
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        if (result->type != FURITEN || result->type != RON || result->type != TSUMO) {
+            result->type = TENPAI;
+            return true;
+        }
+    }
+    return false;
 }
 
 int main() {
