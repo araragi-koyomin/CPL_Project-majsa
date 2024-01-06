@@ -10,17 +10,20 @@ enum fulutype {
 }; 
 typedef enum fulutype FuluType;
 
+/// @brief 原始副露区，包含副露种类与副露字符串
 struct groupChar {
     FuluType fuluType;
     char groupHai[];
 };
 typedef struct groupChar Group;
 
+/// @brief 转化后副露区，包含副露种类与副露整形数组
 struct groupInt{
     FuluType fulutype;
-    int groupHaiInt;
+    int groupHaiInt[4];
 };
 typedef struct groupInt GroupInt;
+GroupInt groupTile1[30];
 
 
 enum player {
@@ -58,5 +61,3 @@ typedef enum hailist HaiList;
 int handTile1[14], discardTile1[30], currentTile1, uradora1[6], dora1[6];
 
 int Fan, Dora, Fu;
-
-GroupInt groupTile1[30];

@@ -1,7 +1,5 @@
 #include "main.h"
 
-bool IsRiichi(Status status);
-
 bool AgariCheck(Status status, int *handTile1, int *discardTile1, int currentTile1, GroupInt *groupTile1);
 
 bool IsAgari(int handTile1[], int needMentsu, const int *discardTile1, const int currentTile1, const Status status);
