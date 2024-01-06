@@ -1,3 +1,5 @@
+#define MAX(a, b) (a > b ? a : b)
+
 /// @brief 风的类型
 enum kazetype {
     TON = 1, NAN, SHAA, PEI
@@ -61,3 +63,9 @@ typedef enum hailist HaiList;
 int handTile1[14], discardTile1[30], currentTile1, uradora1[6], dora1[6];
 
 int Fan, Dora, Fu;
+
+typedef struct mentsutype {
+    int shuntsunum, koutsunum;
+    int shun[4][3], kou[4][4], jyan[2];
+} MentsuType;
+MentsuType mentsuType;

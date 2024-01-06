@@ -106,6 +106,7 @@ bool AgariCheck(Status status, int *handTile1, int *discardTile1, int currentTil
 /// @param needMentsu 
 /// @return 满足返回true，否则返回false
 bool IsAgari(int handTile1[], int needMentsu, const int *discardTile1, const int currentTile1, const Status status) {
+    bool flag = false;
     // 统计手牌中各牌个数，为虚听做好准备
     int bucket[zhong + 1] = {0};
     for (int i = 0; i < 14; i++) 
@@ -116,16 +117,17 @@ bool IsAgari(int handTile1[], int needMentsu, const int *discardTile1, const int
             int tmp1 = handTile1[i], tmp2 = handTile1[i + 1];
             handTile1[i] = 0;
             handTile1[i + 1] = 0;
+            mentsuType.jyan[0] = tmp1, mentsuType.jyan[1] = tmp2;
             // 再找出4个面子
             int mentsu = 0;
-            if (FindShuntsu(handTile1, 0, mentsu, discardTile1, currentTile1, status, bucket) || FindKoutsu(handTile1, 0, mentsu, discardTile1, currentTile1, status, bucket)) {
+            if (FindShuntsu(handTile1, 0, mentsu, discardTile1, currentTile1, status, bucket, needMentsu) || FindKoutsu(handTile1, 0, mentsu, discardTile1, currentTile1, status, bucket, needMentsu)) {
                 printf("*");
-                return true;
+                flag = 1;
             }
             handTile1[i] = tmp1, handTile1[i + 1] = tmp2;
         }
     }
-    return false;
+    return flag;
 }
 
 /// @brief 判断在胡牌型的基础上是否振听
@@ -185,7 +187,7 @@ int IsKoukushimusou(const int *handTile1, const int currentTile1) {
 /// @param handTile1
 /// @param index
 /// @return 能找到返回true，反之返回false
-bool FindShuntsu(int handTile1[], int index, int mentsu, const int *discardTile1, const int currentTile1, const Status status, const int bucket[]) {
+bool FindShuntsu(int handTile1[], int index, int mentsu, const int *discardTile1, const int currentTile1, const Status status, const int bucket[], int needMentsu) {
     // 返回成功条件：手牌清空
     int i1 = 0, i2 = 0, i3 = 0;
     int flag = 0;
@@ -194,7 +196,13 @@ bool FindShuntsu(int handTile1[], int index, int mentsu, const int *discardTile1
     for (int i = 0; i < 14; i++)
         if (handTile1[i] == 0)
             checkIfZero++;
-    if (checkIfZero == 14) return true;
+    if (checkIfZero == 14) {
+        YakuCheck();
+        if (resultTemp->han) {
+            result = result->point > resultTemp->point ? result : resultTemp;
+        }
+        return true;
+    }
     if (index >= 12) return false;
     // 寻找顺子
     for (int i = index; i < 13; i++) {
@@ -204,6 +212,10 @@ bool FindShuntsu(int handTile1[], int index, int mentsu, const int *discardTile1
             for (int j = i + 1; j < 14; j++) {
                 if (handTile1[j] == handTile1[index] + 2) {
                     value1 = handTile1[index], value2 = handTile1[i], value3 = handTile1[j];
+                    mentsuType.shuntsunum++;
+                    mentsuType.shun[mentsuType.shuntsunum - 1][0] = value1, 
+                    mentsuType.shun[mentsuType.shuntsunum - 1][1] = value2, 
+                    mentsuType.shun[mentsuType.shuntsunum - 1][2] = value3;
                     i1 = index, i2 = i, i3 = j;
                     handTile1[index] = 0, handTile1[i] = 0, handTile1[j] = 0;
                     flag = 1;
@@ -213,13 +225,21 @@ bool FindShuntsu(int handTile1[], int index, int mentsu, const int *discardTile1
             }
         }
     }
-    bool CanFind = FindShuntsu(handTile1, index + 1, mentsu + 1, discardTile1, currentTile1, status, bucket);
+    bool CanFind = FindShuntsu(handTile1, index + 1, mentsu + 1, discardTile1, currentTile1, status, bucket, needMentsu);
+    if (CanFind) {
+        mentsuType.shuntsunum--;
+        memset(mentsuType.shun[mentsuType.shuntsunum], 0, sizeof(int) * 3);
+    }
     // 检验是否听牌型
     int IsTen = Is41Tennpai(mentsu, discardTile1, currentTile1, status, handTile1, bucket);
     if (flag) 
         handTile1[i1] = value1, handTile1[i2] = value2, handTile1[i3] = value3;
-    if (CanFind) return true;
-    CanFind = FindKoutsu(handTile1, index + 1, mentsu + 1, discardTile1, currentTile1, status, bucket);
+    // if (CanFind) return true;
+    CanFind = FindKoutsu(handTile1, index + 1, mentsu + 1, discardTile1, currentTile1, status, bucket, needMentsu);
+    if (CanFind) {
+        mentsuType.koutsunum--;
+        memset(mentsuType.kou[mentsuType.koutsunum], 0, sizeof(int) * 3);
+    }
     // 检验是否听牌型
     IsTen += Is41Tennpai(mentsu, discardTile1, currentTile1, status, handTile1, bucket);
     if (flag) 
@@ -236,7 +256,7 @@ bool FindShuntsu(int handTile1[], int index, int mentsu, const int *discardTile1
 /// @param handTile1
 /// @param index
 /// @return 能找到返回true，反之返回false
-bool FindKoutsu(int handTile1[], int index, int mentsu, const int *discardTile1, const int currentTile1, const Status status, const int bucket[]) {
+bool FindKoutsu(int handTile1[], int index, int mentsu, const int *discardTile1, const int currentTile1, const Status status, const int bucket[], int needMentsu) {
     // 返回成功条件：手牌清空
     int flag = 0;
     int value1, value2, value3;
@@ -244,7 +264,7 @@ bool FindKoutsu(int handTile1[], int index, int mentsu, const int *discardTile1,
     for (int i = 0; i < 14; i++)
         if (handTile1[i] == 0)
             checkIfZero++;
-    if (checkIfZero == 14) return true;
+    if (checkIfZero == 14 - 3 * sizeof(groupTile1) / sizeof(groupTile1[0])) return true;
     if (index >= 12) return false;
     // 寻找刻子
     if (handTile1[index] == handTile1[index + 1] && handTile1[index + 1] == handTile1[index + 2] && handTile1[index] != 0) {
@@ -252,21 +272,26 @@ bool FindKoutsu(int handTile1[], int index, int mentsu, const int *discardTile1,
         handTile1[index] = 0, handTile1[index + 1] = 0, handTile1[index + 2] = 0;
         flag = 1;
     }
-    bool CanFind = FindShuntsu(handTile1, index + 1, mentsu + 1, discardTile1, currentTile1, status, bucket);
+    bool CanFind = FindShuntsu(handTile1, index + 1, mentsu + 1, discardTile1, currentTile1, status, bucket, needMentsu);
+    if (CanFind) {
+        mentsuType.shuntsunum--;
+        memset(mentsuType.shun[mentsuType.shuntsunum], 0, sizeof(int) * 3);
+    }
     // 判断是否听牌
     Is41Tennpai(mentsu, discardTile1, currentTile1, status, handTile1, bucket);
     if (flag) {
         handTile1[index] = value1, handTile1[index + 1] = value2, handTile1[index + 2] = value3;
     }
+    // if (CanFind) return true;
+    CanFind = FindKoutsu(handTile1, index + 1, mentsu + 1, discardTile1, currentTile1, status, bucket, needMentsu);
+    if (CanFind) {
+        mentsuType.koutsunum--;
+        memset(mentsuType.kou[mentsuType.koutsunum], 0, sizeof(int) * 3);
+    }
+    // 判断是否听牌
+    Is41Tennpai(mentsu, discardTile1, currentTile1, status, handTile1, bucket);
+    if (flag) handTile1[index] = value1, handTile1[index + 1] = value2, handTile1[index + 2] = value3;
     if (CanFind) return true;
-    CanFind = FindKoutsu(handTile1, index + 1, mentsu + 1, discardTile1, currentTile1, status, bucket);
-    // 判断是否听牌
-    Is41Tennpai(mentsu, discardTile1, currentTile1, status, handTile1, bucket);
-    if (flag) {
-        handTile1[index] = value1, handTile1[index + 1] = value2, handTile1[index + 2] = value3;
-    }
-    if (CanFind)
-        return true;
     return false;
 }
 

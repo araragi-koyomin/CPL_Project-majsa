@@ -38,4 +38,4 @@ struct result {
 };
 typedef struct result Result;
 
- Result *result;
+Result *result, *resultTemp;
