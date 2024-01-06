@@ -145,7 +145,11 @@ bool IsFuritenInAgari(const int *discardTile1, const int currentTile1, const Sta
 /// @param status
 /// @return 门前清返回true, 副露返回false
 bool IsMenzenchin(const Status status) {
-    return status.groupTile[0].groupHai[0] == 0 ? true : false;
+    if(status.groupTile[0].groupHai[0] == 0) return true;
+    for (int i = 0; i < sizeof(groupTile1) / sizeof(groupTile1[0]); i++) {
+        if (groupTile1[i].fulutype != Ankan) return false;
+    }
+    return true;
 }
 
 /// @brief 判断是否为七对子牌型

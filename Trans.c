@@ -37,23 +37,29 @@ void HaiTrans(Status status) {
         for (int j = 0; j < strlen(status.groupTile[i].groupHai); j += 2) {
             if (status.groupTile[i].groupHai[j] == '0') {
                 if (status.groupTile[i].groupHai[j + 1] == 'm') {
-                    groupTile1[i].groupHaiInt = gm;
+                    groupTile1[i].groupHaiInt[j / 2] = gm;
                     Dora++;
                 }
                 else if (status.groupTile[i].groupHai[j + 1] == 'p') {
-                    groupTile1[i].groupHaiInt = gp;
+                    groupTile1[i].groupHaiInt[j / 2] = gp;
                     Dora++;
                 }
                 else if (status.groupTile[i].groupHai[j + 1] == 's') {
-                    groupTile1[i].groupHaiInt = gs;
+                    groupTile1[i].groupHaiInt[j / 2] = gs;
                     Dora++;
                 }
-            } else if (status.groupTile[i].groupHai[j + 1] == 'm') groupTile1[i].groupHaiInt = status.groupTile[i].groupHai[j] - '1' + im;
-            else if (status.groupTile[i].groupHai[j + 1] == 'p') groupTile1[i].groupHaiInt = status.groupTile[i].groupHai[j] - '1' + ip;
-            else if (status.groupTile[i].groupHai[j + 1] == 's') groupTile1[i].groupHaiInt = status.groupTile[i].groupHai[j] - '1' + is;
-            else if (status.groupTile[i].groupHai[j + 1] == 'z') groupTile1[i].groupHaiInt = status.groupTile[i].groupHai[j] - '1' + east;
+            } else if (status.groupTile[i].groupHai[j + 1] == 'm') groupTile1[i].groupHaiInt[j / 2] = status.groupTile[i].groupHai[j] - '1' + im;
+            else if (status.groupTile[i].groupHai[j + 1] == 'p') groupTile1[i].groupHaiInt[j / 2] = status.groupTile[i].groupHai[j] - '1' + ip;
+            else if (status.groupTile[i].groupHai[j + 1] == 's') groupTile1[i].groupHaiInt[j / 2] = status.groupTile[i].groupHai[j] - '1' + is;
+            else if (status.groupTile[i].groupHai[j + 1] == 'z') groupTile1[i].groupHaiInt[j / 2] = status.groupTile[i].groupHai[j] - '1' + east;
         }
-        if (groupTile1[i] ==)
+        if (groupTile1[i].groupHaiInt[0] != groupTile1[i].groupHaiInt[1]) {
+            groupTile1[i].fulutype = Shuntsu;
+        } else if (sizeof(groupTile1[i].groupHaiInt) / sizeof(groupTile1[i].groupHaiInt[0]) == 3) {
+            groupTile1[i].fulutype = Koutsu;
+        } else if () { // 暂时还不知道如何判断暗杠与明杠
+
+        }
     }
     // 宝牌转换
     for (int i = 0; i < strlen(status.dora); i += 2) {
