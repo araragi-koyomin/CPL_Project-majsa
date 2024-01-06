@@ -20,7 +20,7 @@ void IsRinshankaihou(Status status, int *yakunum);
 
 void IsTanyao(Status status, int *yakunum, int *handTile1);
 
-void IsYakuhai(Status status, int *yakunum, int handTile1[]);
+void IsYakuhai(Status status, int *yakunum);
 
 void IsChantaiyao(Status status, int *yakunum, int handTile1[]);
 
@@ -50,29 +50,29 @@ void IsChinitsu(Status status, int *yakunum, int handTile1[]);
 
 void IsKokushimusou(Status status, int *yakunum, int handTile1[]);
 
-void IsSuuankou(Status status, int *yakunum, int handTile1[]);
+void IsSuuankou(Status status, int *yakunum);
 
-void IsDaisangen(Status status, int *yakunum, int handTile1[]);
+void IsDaisangen(Status status, int *yakunum);
 
-void IsShousuushii(Status status, int *yakunum, int handTile1[]);
+void IsShousuushii(Status status, int *yakunum);
 
 void IsTsuiisou(Status status, int *yakunum, int handTile1[]);
 
 void IsChinroutou(Status status, int *yakunum, int handTile1[]);
 
-void IsRyuuiisou(Status status, int *yakunum, int handTile1[]);
+void IsRyuuiisou(Status status, int *yakunum, int *handTile1);
 
 void IsChuurenpoutou(Status status, int *yakunum, int handTile1[]);
 
-void IsSuukantsu(Status status, int *yakunum, int handTile1[]);
+void IsSuukantsu(Status status, int *yakunum);
 
-void IsTenhou(Status status, int *yakunum, int handTile1[]);
+void IsTenhou(Status status, int *yakunum);
 
-void IsChiihou(Status status, int *yakunum, int handTile1[]);
+void IsChiihou(Status status, int *yakunum);
 
-void IsSuuankoutanki(Status status, int *yakunum, int handTile1[]);
+void IsSuuankoutanki(Status status, int *yakunum);
 
-void IsDaisuushii(Status status, int *yakunum, int handTile1[]);
+void IsDaisuushii(Status status, int *yakunum);
 
 void IsJunseichuurenpoutou(Status status, int *yakunum, int handTile1[]);
 

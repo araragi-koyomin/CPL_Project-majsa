@@ -53,13 +53,7 @@ void HaiTrans(Status status) {
             else if (status.groupTile[i].groupHai[j + 1] == 's') groupTile1[i].groupHaiInt[j / 2] = status.groupTile[i].groupHai[j] - '1' + is;
             else if (status.groupTile[i].groupHai[j + 1] == 'z') groupTile1[i].groupHaiInt[j / 2] = status.groupTile[i].groupHai[j] - '1' + east;
         }
-        if (groupTile1[i].groupHaiInt[0] != groupTile1[i].groupHaiInt[1]) {
-            groupTile1[i].fulutype = Shuntsu;
-        } else if (sizeof(groupTile1[i].groupHaiInt) / sizeof(groupTile1[i].groupHaiInt[0]) == 3) {
-            groupTile1[i].fulutype = Koutsu;
-        } else if () { // 暂时还不知道如何判断暗杠与明杠
-
-        }
+        groupTile1[i].fulutype = status.groupTile[]
     }
     // 宝牌转换
     for (int i = 0; i < strlen(status.dora); i += 2) {
