@@ -1,6 +1,6 @@
 #include "majsa.h"
 
-void CmpTrans(const void *a, const void *b) {
+int CmpTrans(const void *a, const void *b) {
     return *(int *)a - *(int *)b;
 }
 Result *majsa(Status *status) {

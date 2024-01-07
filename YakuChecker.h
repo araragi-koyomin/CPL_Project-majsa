@@ -91,25 +91,10 @@ void AddUradora(Status status, int *handTile1, GroupInt *groupTile1, int *urador
 
 ///////////////////////////////////////////////////////下面为是否门前清的两个函数//////////////////////////////////////////////////////////////
 
-bool IsMenzenchin1(const Status status) {
-    if(status.groupTile[0].tile[0] == 0) return true;
-    // for (int i = 0; i < sizeof(groupTile1) / sizeof(groupTile1[0]); i++) {
-    //     if (groupTile1[i].fulutype != Ankan) return false;
-    // }
-    // return true;
-    return false;
-}
+bool IsMenzenchin1(const Status status);
 
-bool IsMenzenchin2(const Status status) {
-    if(status.groupTile[0].tile[0] == 0) return true;
-    for (int i = 0; i < sizeof(groupTile1) / sizeof(groupTile1[0]); i++) {
-        if (groupTile1[i].fulutype != Ankan) return false;
-    }
-    return true;
-}
+bool IsMenzenchin2(const Status status);
 
-bool CmpYaku(const void *a, const void *b) {
-    return *(int*)a - *(int*)b;
-}
+int CmpYaku(const void *a, const void *b);
 
 #endif // YAKUCHECKER_H

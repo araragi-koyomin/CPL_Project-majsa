@@ -42,7 +42,8 @@ struct result {
 };
 typedef struct result Result;
 
-Result *result, *resultTemp;
+Result *resultTemp;
+extern Result *result;
 
 
 

@@ -1,6 +1,5 @@
-#include <stdio.h>
-#include <stdbool.h>
 #include "main.h"
+#include "majsa.h"
 
 int main(){
   Status status = {

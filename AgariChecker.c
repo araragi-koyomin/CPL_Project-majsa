@@ -1,4 +1,5 @@
 #include "AgariChecker.h"
+#include "YakuChecker.h"
 
 // struct status {
 //     KazeType bakaze;       // 场风
@@ -220,7 +221,7 @@ int IsKoukushimusou(const int *handTile1, const int currentTile1)
 /// @param handTile1
 /// @param index
 /// @return 能找到返回true，反之返回false
-bool FindShuntsu(int handTile1[], int index, int mentsu, const int *discardTile1, const int currentTile1, const Status status, const int bucket[], int needMentsu)
+bool FindShuntsu(int handTile1[], int index, int mentsu, int *discardTile1, int currentTile1, Status status, int bucket[], int needMentsu)
 {
     // 返回成功条件：手牌清空
     int i1 = 0, i2 = 0, i3 = 0;
@@ -386,7 +387,7 @@ bool Is41Tennpai(int mentsu, int *discardTile1, int currentTile1, Status status,
     int nokoru[3], index = 0;
     for (int i = 0; i < 14; i++)
         if (handTile1)
-            nokoru[index++] = handTile1;
+            nokoru[index++] = handTile1[i];
     // 判断剩余3张牌是否形成搭子
     // 听对碰
     for (int i = 0; i < 2; i++)

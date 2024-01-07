@@ -1,4 +1,5 @@
 #include "YakuChecker.h"
+#include "Calculator.h"
 
 //////// 整体思路：先判断双倍役满牌型，然后是役满，接下来是会互相覆盖的牌型，如两杯口 > 七对子 > 一杯口, 以及 两立直 > 立直
 ////////////////////////////////////////////////////////下为用来判断番数的主要函数////////////////////////////////////////
@@ -26,7 +27,7 @@ void YakuCheck(Status status, int handTile1[], GroupInt groupTile1[], int discar
     if (yakunum > 0) { 
         // 若为役满，则直接进行点数结算，不进行后续役种判断操作
         qsort(resultTemp->yaku, &yakunum, sizeof(int), CmpYaku);
-        Calculator();
+        Calculator(status, handTile1, groupTile1);
         return;
     }
 
@@ -69,7 +70,7 @@ void YakuCheck(Status status, int handTile1[], GroupInt groupTile1[], int discar
 
     if (yakunum > 0) {
         AddDora(status, handTile1, groupTile1, dora1);
-        Calculator();
+        Calculator(status, handTile1, groupTile1);
         return;
     }
 }
@@ -313,7 +314,7 @@ bool IsSuuankoutanki(Status status, int *yakunum) {
             }
         }
     }
-    if (IsMenzenchin1(status) && mentsuType.kou + count == 4 && mentsuType.jyan[0] == currentTile1) {
+    if (IsMenzenchin1(status) && mentsuType.koutsunum + count == 4 && mentsuType.jyan[0] == currentTile1) {
         resultTemp->han -= 2;
         resultTemp->yaku[(*yakunum)++] = Suuankoutanki;
         return true;
@@ -379,7 +380,7 @@ void IsSuuankou(Status status, int *yakunum) {
             }
         }
     }
-    if (IsMenzenchin1(status) && mentsuType.kou + count == 4 && mentsuType.jyan[0] != currentTile1 && status.currentPlayer == JICHA) {
+    if (IsMenzenchin1(status) && mentsuType.koutsunum + count == 4 && mentsuType.jyan[0] != currentTile1 && status.currentPlayer == JICHA) {
         resultTemp->han -= 1;
         resultTemp->yaku[(*yakunum)++] = Suuankou;
     }
@@ -1045,4 +1046,25 @@ void AddUradora(Status status, int *handTile1, GroupInt *groupTile1, int *urador
             }
         }
     }
+}
+
+bool IsMenzenchin1(const Status status) {
+    if(status.groupTile[0].tile[0] == 0) return true;
+    // for (int i = 0; i < sizeof(groupTile1) / sizeof(groupTile1[0]); i++) {
+    //     if (groupTile1[i].fulutype != Ankan) return false;
+    // }
+    // return true;
+    return false;
+}
+
+bool IsMenzenchin2(const Status status) {
+    if(status.groupTile[0].tile[0] == 0) return true;
+    for (int i = 0; i < sizeof(groupTile1) / sizeof(groupTile1[0]); i++) {
+        if (groupTile1[i].fulutype != Ankan) return false;
+    }
+    return true;
+}
+
+int CmpYaku(const void *a, const void *b) {
+    return *(int*)a - *(int*)b;
 }
