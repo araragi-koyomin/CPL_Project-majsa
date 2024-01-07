@@ -3,18 +3,89 @@
 //////// 整体思路：先判断双倍役满牌型，然后是役满，接下来是会互相覆盖的牌型，如两杯口 > 七对子 > 一杯口, 以及 两立直 > 立直
 ////////////////////////////////////////////////////////下为用来判断番数的主要函数////////////////////////////////////////
 
+void YakuCheck(Status status, int handTile1[], GroupInt groupTile1[], int discardTile1[], int currentTile) {
+    int yakunum = 0;
+    // 首先判断役满
+    if (!IsJunseichuurenpoutou(status, &yakunum, handTile1)) {
+        IsChuurenpoutou(status, &yakunum, handTile1);
+    }
+    IsKokushimusou(status, &yakunum, handTile1);
+    IsDaisuushii(status, &yakunum);
+    if (!IsSuuankoutanki(status, &yakunum)) {
+        IsSuuankou(status, &yakunum);
+    }
+    IsShousuushii(status, &yakunum);
+    IsTenhou(status, &yakunum);
+    IsChiihou(status, &yakunum);
+    IsRyuuiisou(status, &yakunum, handTile1);
+    IsChinroutou(status, &yakunum, handTile1);
+    IsSuukantsu(status, &yakunum);
+    IsTsuiisou(status, &yakunum, handTile1);
+    IsDaisangen(status, &yakunum);
 
+    if (yakunum > 0) { 
+        // 若为役满，则直接进行点数结算，不进行后续役种判断操作
+        qsort(resultTemp->yaku, &yakunum, sizeof(int), CmpYaku);
+        Calculator();
+        return;
+    }
+
+    // 接下来判断会被覆盖的役
+    if (!IsJunchantaiyao(status, &yakunum, handTile1)) {
+        IsChantaiyao(status, &yakunum);
+    }
+    if (!IsRyanpeikou(status, &yakunum)) {
+        if (!IsChiitoitsu(status, &yakunum, handTile1)) {
+            IsIipeikou(status, &yakunum);
+        }
+    }
+    if (!IsChinitsu(status, &yakunum, handTile1)) {
+        IsHonitsu(status, &yakunum, handTile1);
+    }
+
+    //接下来是立直役的累加判断
+    if (IsRiichi(status, &yakunum)) {
+        IsDoubleRiichi(status, &yakunum);
+        IsIppatsu(status, &yakunum);
+        AddUradora(status, handTile1, groupTile1, uradora1);
+    }
+
+    // 接下来是其他役的累加
+    IsMenzenchintsumohou(status, &yakunum);
+    IsPinfu(status, &yakunum);
+    IsHaiteiraoyue(status, &yakunum);
+    IsHouteiraoyui(status, &yakunum);
+    IsRinshankaihou(status, &yakunum);
+    IsTanyao(status, &yakunum, handTile1);
+    IsYakuhai(status, &yakunum);
+    IsHonroutou(status, &yakunum, handTile1);
+    IsSankantsu(status, &yakunum);
+    IsSanankou(status, &yakunum);
+    IsIttsu(status, &yakunum);
+    IsSanshokudoukou(status, &yakunum);
+    IsSanshoukudoujun(status, &yakunum);
+    IsShousangan(status, &yakunum);
+    IsToitoi(status, &yakunum);
+
+    if (yakunum > 0) {
+        AddDora(status, handTile1, groupTile1, dora1);
+        Calculator();
+        return;
+    }
+}
 
 ////////////////////////////////////////////////////////下面为1番役/////////////////////////////////////////////////////
 
 /// @brief 判断是否立直
 /// @param status
 /// @param yakunum
-void IsRiichi(Status status, int *yakunum) {
+bool IsRiichi(Status status, int *yakunum) {
     if (status.isRiichi) {
-        result->han++;
-        result->yaku[(*yakunum)++] = Riichi;
+        resultTemp->han++;
+        resultTemp->yaku[(*yakunum)++] = Riichi;
+        return true;
     }
+    return false;
 }
 
 /// @brief 判断是否双立直
@@ -22,8 +93,8 @@ void IsRiichi(Status status, int *yakunum) {
 /// @param yakunum 
 void IsDoubleRiichi(Status status, int *yakunum) {
     if (status.isDoubleRiichi) {
-        result->han++;
-        result->yaku[(*yakunum)] = doubleRiichi;
+        resultTemp->han++;
+        resultTemp->yaku[(*yakunum)] = doubleRiichi;
     }
 }
 
@@ -32,8 +103,8 @@ void IsDoubleRiichi(Status status, int *yakunum) {
 /// @param yakunum 
 void IsIppatsu(Status status, int *yakunum) {
     if (status.isIppatsu) {
-        result->han++;
-        result->yaku[(*yakunum)++] = Ippatsu;
+        resultTemp->han++;
+        resultTemp->yaku[(*yakunum)++] = Ippatsu;
     }
 }
 
@@ -41,9 +112,9 @@ void IsIppatsu(Status status, int *yakunum) {
 /// @param status 
 /// @param yakunum 
 void IsMenzenchintsumohou(Status status, int *yakunum) {
-    if (IsMenzenchin2(status) && result->type == TSUMO) {
-        result->han++;
-        result->yaku[(*yakunum)++] = Menzenchintsumo;
+    if (IsMenzenchin2(status) && resultTemp->type == TSUMO) {
+        resultTemp->han++;
+        resultTemp->yaku[(*yakunum)++] = Menzenchintsumo;
     }
 }
 
@@ -55,8 +126,8 @@ void IsPinfu(Status status, int *yakunum) {
         return;
     }
     if (IsMenzenchin2(status) && mentsuType.shuntsunum == 4) {
-        result->han++;
-        result->yaku[(*yakunum)++] = Pinhu;
+        resultTemp->han++;
+        resultTemp->yaku[(*yakunum)++] = Pinhu;
     } 
 }
 
@@ -69,8 +140,8 @@ void IsIipeikou(Status status, int *yakunum) {
         for (int i = 0; i < mentsuType.shuntsunum - 1; i++) {
             for (int j = 1; j < mentsuType.shuntsunum; j++) {
                 if (mentsuType.shun[i][0] == mentsuType.shun[j][0]) {
-                    result->han++;
-                    result->yaku[(*yakunum)++] = Iipeikou;
+                    resultTemp->han++;
+                    resultTemp->yaku[(*yakunum)++] = Iipeikou;
                     return;
                 }
             }
@@ -83,8 +154,8 @@ void IsIipeikou(Status status, int *yakunum) {
 /// @param yakunum 
 void IsHaiteiraoyue(Status status, int *yakunum) {
     if (status.remainTileCount == 0 && status.currentPlayer == JICHA) {
-        result->han++;
-        result->yaku[(*yakunum)++] = Haiteiraoyue;
+        resultTemp->han++;
+        resultTemp->yaku[(*yakunum)++] = Haiteiraoyue;
     }
 }
 
@@ -93,8 +164,8 @@ void IsHaiteiraoyue(Status status, int *yakunum) {
 /// @param yakunum 
 void IsHouteiraoyui(Status status, int *yakunum) {
     if (status.remainTileCount == 0 && status.currentPlayer != JICHA) {
-        result->han++;
-        result->yaku[(*yakunum)++] = Houteiraoyui;
+        resultTemp->han++;
+        resultTemp->yaku[(*yakunum)++] = Houteiraoyui;
     }
 }
 
@@ -103,8 +174,8 @@ void IsHouteiraoyui(Status status, int *yakunum) {
 /// @param yakunum 
 void IsRinshankaihou(Status status, int *yakunum) {
     if (status.isRinshan) {
-        result->han++;
-        result->yaku[(*yakunum)++] = Rinshankaihou;
+        resultTemp->han++;
+        resultTemp->yaku[(*yakunum)++] = Rinshankaihou;
     }
 }
 
@@ -127,8 +198,8 @@ void IsTanyao(Status status, int *yakunum, int *handTile1) {
             }
         }
     }
-    result->han++;
-    result->yaku[(*yakunum)++] = Tanyao;
+    resultTemp->han++;
+    resultTemp->yaku[(*yakunum)++] = Tanyao;
 }
 
 /// @brief 判断是否有役牌
@@ -137,39 +208,39 @@ void IsTanyao(Status status, int *yakunum, int *handTile1) {
 void IsYakuhai(Status status, int *yakunum) {
     for (int i = 0; i < mentsuType.koutsunum; i++) {
         if (mentsuType.kou[i][0] == bai) {
-            result->han++;
-            result->yaku[(*yakunum)++] = YakuhaiHaku;
+            resultTemp->han++;
+            resultTemp->yaku[(*yakunum)++] = YakuhaiHaku;
         } else if (mentsuType.kou[i][0] == fa) {
-            result->han++;
-            result->yaku[(*yakunum)++] = YakuhaiHatsu;
+            resultTemp->han++;
+            resultTemp->yaku[(*yakunum)++] = YakuhaiHatsu;
         } else if (mentsuType.kou[i][0] == zhong) {
-            result->han++;
-            result->yaku[(*yakunum)++] = YakuhaiChun;
+            resultTemp->han++;
+            resultTemp->yaku[(*yakunum)++] = YakuhaiChun;
         } else if (mentsuType.kou[i][0] == status.bakaze) {
-            result->han++;
-            result->yaku[(*yakunum)++] = YakuhaiBakaze;
+            resultTemp->han++;
+            resultTemp->yaku[(*yakunum)++] = YakuhaiBakaze;
         } else if (mentsuType.kou[i][0] == status.jikaze) {
-            result->han++;
-            result->yaku[(*yakunum)++] = YakuhaiJikaze;
+            resultTemp->han++;
+            resultTemp->yaku[(*yakunum)++] = YakuhaiJikaze;
         }
     }
     if (!IsMenzenchin1(status)) {
         for (int i = 0; i < sizeof(groupTile1) / sizeof(groupTile1[0]); i++) {
             if (groupTile1[i].groupHaiInt[0] == bai) {
-                result->han++;
-                result->yaku[(*yakunum)++] = YakuhaiHaku;
+                resultTemp->han++;
+                resultTemp->yaku[(*yakunum)++] = YakuhaiHaku;
             } else if (groupTile1[i].groupHaiInt[0] == fa) {
-                result->han++;
-                result->yaku[(*yakunum)++] = YakuhaiHatsu;
+                resultTemp->han++;
+                resultTemp->yaku[(*yakunum)++] = YakuhaiHatsu;
             } else if (groupTile1[i].groupHaiInt[0] == zhong) {
-                result->han++;
-                result->yaku[(*yakunum)++] = YakuhaiChun;
+                resultTemp->han++;
+                resultTemp->yaku[(*yakunum)++] = YakuhaiChun;
             } else if (groupTile1[i].groupHaiInt[0] == status.bakaze) {
-                result->han++;
-                result->yaku[(*yakunum)++] = YakuhaiBakaze;
+                resultTemp->han++;
+                resultTemp->yaku[(*yakunum)++] = YakuhaiBakaze;
             } else if (groupTile1[i].groupHaiInt[0] == status.jikaze) {
-                result->han++;
-                result->yaku[(*yakunum)++] = YakuhaiJikaze;
+                resultTemp->han++;
+                resultTemp->yaku[(*yakunum)++] = YakuhaiJikaze;
             }
         }
     }
@@ -181,9 +252,9 @@ void IsYakuhai(Status status, int *yakunum) {
 /// @param status 
 /// @param yakunum 
 /// @param handTile1 
-void IsJunseichuurenpoutou(Status status, int *yakunum, int handTile1[]) {
+bool IsJunseichuurenpoutou(Status status, int *yakunum, int handTile1[]) {
     int bucket[zhong + 1] = {0}, flag = 0;
-    if (!IsMenzenchin1(status)) return;
+    if (!IsMenzenchin1(status)) return false;
     for (int i = 0; i < 14; i++) {
         bucket[handTile1[i]]++;
     }
@@ -199,10 +270,12 @@ void IsJunseichuurenpoutou(Status status, int *yakunum, int handTile1[]) {
     for (int i = 0; i < 3; i++) {
         if (bucket[im + i * 9] >= 3 && bucket[nm + 9 * i] && bucket[sm + 9 * i] && bucket[shm + 9 * i] && bucket[gm + 9 * i] && bucket[rm + 9 * i]
             && bucket[nm + 9 * i] && bucket[hm + 9 * i] && bucket[km + 9 * i] >= 3 && (bucket[currentTile1] == 2 || bucket[currentTile1] == 4)) {
-            result->han -= 2;
-            result->yaku[(*yakunum)++] = Chuurenkyuumenmachi;
+            resultTemp->han -= 2;
+            resultTemp->yaku[(*yakunum)++] = Chuurenkyuumenmachi;
+            return true;
         }
     }
+    return false;
 }
 
 /// @brief 判断是否大四喜
@@ -223,15 +296,15 @@ void IsDaisuushii(Status status, int *yakunum) {
         }
     }
     if (count == 4) {
-        result->han -= 2;
-        result->yaku[(*yakunum)++] = Daisuushi;
+        resultTemp->han -= 2;
+        resultTemp->yaku[(*yakunum)++] = Daisuushi;
     }
 }
 
 /// @brief 判断是否四暗刻单骑
 /// @param status 
 /// @param yakunum 
-void IsSuuankoutanki(Status status, int *yakunum) {
+bool IsSuuankoutanki(Status status, int *yakunum) {
     int count = 0;
     if (!IsMenzenchin1(status)) {
         for (int i = 0; i < sizeof(groupTile1) / sizeof(groupTile1[0]); i++) {
@@ -241,9 +314,11 @@ void IsSuuankoutanki(Status status, int *yakunum) {
         }
     }
     if (IsMenzenchin1(status) && mentsuType.kou + count == 4 && mentsuType.jyan[0] == currentTile1) {
-        result->han -= 2;
-        result->yaku[(*yakunum)++] = Suuankoutanki;
+        resultTemp->han -= 2;
+        resultTemp->yaku[(*yakunum)++] = Suuankoutanki;
+        return true;
     }
+    return false;
 }
 
 /// @brief 判断是否是国士无双（十三面）
@@ -262,11 +337,11 @@ void IsKokushimusou(Status status, int *yakunum, int handTile1[]) {
         else if (counts[i] != 1 && counts[i] != counts[currentTile1]) flag = 0;
     }
     if (flag) {
-        result->han -= 1;
-        result->yaku[(*yakunum)++] = Kokushimusou;
+        resultTemp->han -= 1;
+        resultTemp->yaku[(*yakunum)++] = Kokushimusou;
     } else {
-        result->han -= 2;
-        result->yaku[(*yakunum)++] = Kokushijuusanmenmachi;
+        resultTemp->han -= 2;
+        resultTemp->yaku[(*yakunum)++] = Kokushijuusanmenmachi;
     }
 }
 
@@ -277,8 +352,8 @@ void IsKokushimusou(Status status, int *yakunum, int handTile1[]) {
 /// @param yakunum 
 void IsTenhou(Status status, int *yakunum) {
     if (status.currentPlayer == JICHA && status.remainTileCount == 69) {
-        result->han -= 1;
-        result->yaku[(*yakunum)++] = Tenhou;
+        resultTemp->han -= 1;
+        resultTemp->yaku[(*yakunum)++] = Tenhou;
     }
 }
 
@@ -287,8 +362,8 @@ void IsTenhou(Status status, int *yakunum) {
 /// @param yakunum 
 void IsChiihou(Status status, int *yakunum) {
     if (status.currentPlayer != JICHA && status.remainTileCount >= 66) {
-        result->han -= 1;
-        result->yaku[(*yakunum)++] = Chihou;
+        resultTemp->han -= 1;
+        resultTemp->yaku[(*yakunum)++] = Chihou;
     }
 }
 
@@ -305,8 +380,8 @@ void IsSuuankou(Status status, int *yakunum) {
         }
     }
     if (IsMenzenchin1(status) && mentsuType.kou + count == 4 && mentsuType.jyan[0] != currentTile1 && status.currentPlayer == JICHA) {
-        result->han -= 1;
-        result->yaku[(*yakunum)++] = Suuankou;
+        resultTemp->han -= 1;
+        resultTemp->yaku[(*yakunum)++] = Suuankou;
     }
 }
 
@@ -339,8 +414,8 @@ void IsChuurenpoutou(Status status, int *yakunum, int *handTile1) {
     for (int i = 0; i < 3; i++) {
         if (bucket[im + i * 9] >= 3 && bucket[nm + 9 * i] && bucket[sm + 9 * i] && bucket[shm + 9 * i] && bucket[gm + 9 * i] && bucket[rm + 9 * i]
             && bucket[nm + 9 * i] && bucket[hm + 9 * i] && bucket[km + 9 * i] >= 3 && (bucket[currentTile1] == 1 || bucket[currentTile1] == 3)) {
-            result->han -= 1;
-            result->yaku[(*yakunum)++] = Chuurenpoutou;
+            resultTemp->han -= 1;
+            resultTemp->yaku[(*yakunum)++] = Chuurenpoutou;
         }
     }
 }
@@ -368,8 +443,8 @@ void IsRyuuiisou(Status status, int *yakunum, int *handTile1) {
             }
         }
     }
-    result->han -= 1;
-    result->yaku[(*yakunum)++] = Ryuuiisou;
+    resultTemp->han -= 1;
+    resultTemp->yaku[(*yakunum)++] = Ryuuiisou;
 }
 
 /// @brief 判断是否清老头
@@ -393,8 +468,8 @@ void IsChinroutou(Status status, int *yakunum, int handTile1[]) {
             }
         }
     }
-    result->han -= 1;
-    result->yaku[(*yakunum)++] = Chinroutou;
+    resultTemp->han -= 1;
+    resultTemp->yaku[(*yakunum)++] = Chinroutou;
 }
 
 /// @brief 判断是否四杠子
@@ -406,8 +481,8 @@ void IsSuukantsu(Status status, int *yakunum) {
             return;
         }
     }
-    result->han -= 1;
-    result->yaku[(*yakunum)++] = Suukantsu;
+    resultTemp->han -= 1;
+    resultTemp->yaku[(*yakunum)++] = Suukantsu;
 }
 
 /// @brief 判断是否字一色
@@ -430,8 +505,8 @@ void IsTsuiisou(Status status, int *yakunum, int handTile1[]) {
             }
         }
     }
-    result->han -= 1;
-    result->yaku[(*yakunum)++] = Tsuuiisou;
+    resultTemp->han -= 1;
+    resultTemp->yaku[(*yakunum)++] = Tsuuiisou;
 }
 
 /// @brief 判断是否小四喜
@@ -452,8 +527,8 @@ void IsShousuushii(Status status, int *yakunum) {
         }
     }
     if (count == 3 && mentsuType.jyan[0] >= east && mentsuType.jyan[0] <= north) {
-        result->han -= 1;
-        result->yaku[(*yakunum)++] = Shousuushi;
+        resultTemp->han -= 1;
+        resultTemp->yaku[(*yakunum)++] = Shousuushi;
     }
 }
 
@@ -475,8 +550,8 @@ void IsDaisangen(Status status, int *yakunum) {
         }
     }
     if (count == 3) {
-        result->han -= 1;
-        result->yaku[(*yakunum)++] = Daisangen;
+        resultTemp->han -= 1;
+        resultTemp->yaku[(*yakunum)++] = Daisangen;
     }
 }
 
@@ -486,7 +561,7 @@ void IsDaisangen(Status status, int *yakunum) {
 /// @param status 
 /// @param yakunum 
 /// @param handTile1 
-void IsChinitsu(Status status, int *yakunum, int *handTile1) {
+bool IsChinitsu(Status status, int *yakunum, int *handTile1) {
     int flag = 0;
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < sizeof(handTile1) / sizeof(handTile1[0]); j++) {
@@ -506,13 +581,16 @@ void IsChinitsu(Status status, int *yakunum, int *handTile1) {
     }
     if (flag) {
         if (IsMenzenchin2(status)) {
-            result->han += 6;
-            result->yaku[(*yakunum)++] = Chinitsu;
+            resultTemp->han += 6;
+            resultTemp->yaku[(*yakunum)++] = Chinitsu;
+            return true;
         } else {
-            result->han += 5;
-            result->yaku[(*yakunum)++] = ChinitsuF;
+            resultTemp->han += 5;
+            resultTemp->yaku[(*yakunum)++] = ChinitsuF;
+            return true;
         }
     }
+    return false;
 }
 
 /////////////////////////////////////////////////////////以下为3番役//////////////////////////////////////////////////////////////////////////
@@ -520,22 +598,24 @@ void IsChinitsu(Status status, int *yakunum, int *handTile1) {
 /// @brief 判断是否两杯口
 /// @param status 
 /// @param yakunum 
-void IsRyanpeikou(Status status, int *yakunum) {
+bool IsRyanpeikou(Status status, int *yakunum) {
     if (mentsuType.shuntsunum == 4) {
         if (mentsuType.shun[0][0] == mentsuType.shun[1][0] && mentsuType.shun[2][0] == mentsuType.shun[3][0] ||
             mentsuType.shun[0][0] == mentsuType.shun[2][0] && mentsuType.shun[1][0] == mentsuType.shun[3][0] ||
             mentsuType.shun[0][0] == mentsuType.shun[3][0] && mentsuType.shun[1][0] == mentsuType.shun[2][0]) {
-            result->han += 3;
-            result->yaku[(*yakunum)++] = Ryanpeikou;
+            resultTemp->han += 3;
+            resultTemp->yaku[(*yakunum)++] = Ryanpeikou;
+            return true;
         }
     }
+    return false;
 }
 
 /// @brief 判断是否纯全带幺九
 /// @param status 
 /// @param yakunum 
 /// @param handTile1 
-void IsJunchantaiyao(Status status, int *yakunum, int handTile1[]) {
+bool IsJunchantaiyao(Status status, int *yakunum, int handTile1[]) {
     for (int i = 0; i < mentsuType.koutsunum; i++) {
         if (mentsuType.kou[i][0] != im && mentsuType.kou[i][0] != km && mentsuType.kou[i][0] != ip && mentsuType.kou[i][0] != ks && mentsuType.kou[i][0] != is && mentsuType.kou[i][0] != kp) {
             return;
@@ -547,24 +627,28 @@ void IsJunchantaiyao(Status status, int *yakunum, int handTile1[]) {
         }
     }
     if (IsMenzenchin1(status)) {
-        result->han += 3;
-        result->yaku[(*yakunum)++] = Junchantaiyaochuu;
+        resultTemp->han += 3;
+        resultTemp->yaku[(*yakunum)++] = Junchantaiyaochuu;
+        return true;
     } else {
         for (int i = 0; i < sizeof(groupTile1) / sizeof(groupTile1[0]); i++) {
             if (groupTile1->fulutype == Shuntsu && groupTile1->groupHaiInt[0] != im && groupTile1->groupHaiInt[2] != km && groupTile1->groupHaiInt[0] != ip && groupTile1->groupHaiInt[2] != kp && groupTile1->groupHaiInt[0] != is && groupTile1->groupHaiInt[2] != ks) {
-                return;
+                return false;
             } else if (groupTile1->fulutype != Shuntsu && groupTile1->groupHaiInt[0] != im && groupTile1->groupHaiInt[0] != km && groupTile1->groupHaiInt[0] != ip && groupTile1->groupHaiInt[0] != kp && groupTile1->groupHaiInt[0] != is && groupTile1->groupHaiInt[0] != ks) {
-                return;
+                return false;
             }
         }
         if (IsMenzenchin2(status)) {
-            result->han += 3;
-            result->yaku[(*yakunum)++] = Junchantaiyaochuu;
+            resultTemp->han += 3;
+            resultTemp->yaku[(*yakunum)++] = Junchantaiyaochuu;
+            return true;
         } else {
-            result->han += 2;
-            result->yaku[(*yakunum)++] = JunchantaiyaochuuF;
+            resultTemp->han += 2;
+            resultTemp->yaku[(*yakunum)++] = JunchantaiyaochuuF;
+            return true;
         }
     }
+    return false;
 }
 
 /// @brief 判断是否混一色
@@ -593,11 +677,11 @@ void IsHonitsu(Status status, int *yakunum, int handTile1[]) {
     }
     if (flag) {
         if (IsMenzenchin2(status)) {
-            result->han += 3;
-            result->yaku[(*yakunum)++] = Honitsu;
+            resultTemp->han += 3;
+            resultTemp->yaku[(*yakunum)++] = Honitsu;
         } else {
-            result->han += 2;
-            result->yaku[(*yakunum)++] = HonitsuF;
+            resultTemp->han += 2;
+            resultTemp->yaku[(*yakunum)++] = HonitsuF;
         }
     }
 }
@@ -622,8 +706,8 @@ void IsShousangan(Status status, int *yakunum) {
         }
     }
     if (count == 2 && mentsuType.jyan[0] >= bai) {
-        result->han += 2;
-        result->yaku[(*yakunum)++] = Shousangen;
+        resultTemp->han += 2;
+        resultTemp->yaku[(*yakunum)++] = Shousangen;
     }
 }
 
@@ -650,8 +734,8 @@ void IsHonroutou(Status status, int *yakunum, int *handTile1) {
             }
         }
     }
-    result->han += 2;
-    result->yaku[(*yakunum)++] = Honroutou;
+    resultTemp->han += 2;
+    resultTemp->yaku[(*yakunum)++] = Honroutou;
 }
 
 /// @brief 判断是否三杠子
@@ -666,8 +750,8 @@ void IsSankantsu(Status status, int *yakunum) {
         }
     }
     if (count == 3) {
-        result->han += 2;
-        result->yaku[(*yakunum)++] = Sankantsu;
+        resultTemp->han += 2;
+        resultTemp->yaku[(*yakunum)++] = Sankantsu;
     }
 }
 
@@ -693,8 +777,8 @@ void IsSanankou(Status status, int *yakunum) {
     }
     if (mentsuType.jyan[0] == currentTile1) flag = 0;
     if ((mentsuType.koutsunum + count == 3 && flag) || (mentsuType.koutsunum + count == 4 && !flag)) {
-        result->han += 2;
-        result->yaku[(*yakunum)++] = Sanankou;
+        resultTemp->han += 2;
+        resultTemp->yaku[(*yakunum)++] = Sanankou;
     }
 }
 
@@ -710,8 +794,8 @@ void IsToitoi(Status status, int *yakunum) {
             }
         }
     }
-    result->han += 2;
-    result->yaku[(*yakunum)++] = Toitoihou;
+    resultTemp->han += 2;
+    resultTemp->yaku[(*yakunum)++] = Toitoihou;
 }
 
 /// @brief 判断是否三色同刻
@@ -739,8 +823,8 @@ void IsSanshokudoukou(Status status, int *yakunum) {
     }
     for (int i = 0; i < 10; i++) {
         if (bucket[i] >= 3) {
-            result->han += 2;
-            result->yaku[(*yakunum)++] = Sanshokudoukou;
+            resultTemp->han += 2;
+            resultTemp->yaku[(*yakunum)++] = Sanshokudoukou;
             return;
         }
     }
@@ -762,8 +846,8 @@ void IsChantaiyao(Status status, int *yakunum) {
         }
     }
     if (IsMenzenchin1(status)) {
-        result->han += 2;
-        result->yaku[(*yakunum)++] = Honchantaiyaochuu;
+        resultTemp->han += 2;
+        resultTemp->yaku[(*yakunum)++] = Honchantaiyaochuu;
     } else {
         for (int i = 0; i < sizeof(groupTile1) / sizeof(groupTile1[0]); i++) {
             if (groupTile1->fulutype == Shuntsu && groupTile1->groupHaiInt[0] != im && groupTile1->groupHaiInt[2] != km && groupTile1->groupHaiInt[0] != ip && groupTile1->groupHaiInt[2] != kp && groupTile1->groupHaiInt[0] != is && groupTile1->groupHaiInt[2] != ks) {
@@ -774,11 +858,11 @@ void IsChantaiyao(Status status, int *yakunum) {
             }
         }
         if (IsMenzenchin2(status)) {
-            result->han += 2;
-            result->yaku[(*yakunum)++] = Honchantaiyaochuu;
+            resultTemp->han += 2;
+            resultTemp->yaku[(*yakunum)++] = Honchantaiyaochuu;
         } else {
-            result->han += 1;
-            result->yaku[(*yakunum)++] = HonchantaiyaochuuF;
+            resultTemp->han += 1;
+            resultTemp->yaku[(*yakunum)++] = HonchantaiyaochuuF;
         }
     }
 }
@@ -807,12 +891,12 @@ void IsSanshoukudoujun(Status status, int *yakunum) {
     for (int i = 0; i < 10; i++) {
         if (bucket[i] >= 3) {
             if (IsMenzenchin2(status)) {
-                result->han += 2;
-                result->yaku[(*yakunum)++] = Sanshokudoujun;
+                resultTemp->han += 2;
+                resultTemp->yaku[(*yakunum)++] = Sanshokudoujun;
                 return;
             } else {
-                result->han += 1;
-                result->yaku[(*yakunum)++] = SanshokudoujunF;
+                resultTemp->han += 1;
+                resultTemp->yaku[(*yakunum)++] = SanshokudoujunF;
                 return;
             }
         }
@@ -843,12 +927,12 @@ void IsIttsu(Status status, int *yakunum) {
     for (int i = 0; i < east; i++) {
         if (bucket[i] >= 3) {
             if (IsMenzenchin2(status)) {
-                result->han += 2;
-                result->yaku[(*yakunum)++] = Ikkitsuukan;
+                resultTemp->han += 2;
+                resultTemp->yaku[(*yakunum)++] = Ikkitsuukan;
                 return;
             } else {
-                result->han += 1;
-                result->yaku[(*yakunum)++] = IkkitsuukanF;
+                resultTemp->han += 1;
+                resultTemp->yaku[(*yakunum)++] = IkkitsuukanF;
                 return;
             }
         }
@@ -859,12 +943,13 @@ void IsIttsu(Status status, int *yakunum) {
 /// @param status 
 /// @param yakunum 
 /// @param handTile1 
-void IsChiitoitsu(Status status, int *yakunum, int handTile1[]) {
+bool IsChiitoitsu(Status status, int *yakunum, int handTile1[]) {
     for (int i = 0; i < sizeof(handTile1); i += 2)
         if (handTile1[i] != handTile1[i + 1] || handTile1[i + 1] == handTile1[i + 2])
-            return;
-    result->han+= 2;
-    result->yaku[(*yakunum)++] = Chiitoitsu;
+            return false;
+    resultTemp->han+= 2;
+    resultTemp->yaku[(*yakunum)++] = Chiitoitsu;
+    return true;
 }
 
 //////////////////////////////////////////////////////////////////以下为宝牌加番///////////////////////////////////////////////////////////////////////
@@ -879,16 +964,16 @@ void AddDora(Status status, int *handTile1, GroupInt *groupTile1, int *dora1) {
         for (int j = 0; j < sizeof(dora1) / sizeof(dora1[0]); i++) {
             if (dora1[j] < east) {
                 if (dora1[j] % 9 + dora1[j] / 9 + 1 == handTile1[i]) {
-                    result->han++;
+                    resultTemp->han++;
                 }
             } else if (dora1[j] < north && dora1[j] + 1 == handTile1[i]) {
-                result->han++;
+                resultTemp->han++;
             } else if (dora1[j] == north && handTile1[i] == east) {
-                result->han++;
+                resultTemp->han++;
             } else if (dora1[j] < zhong && dora1[j] + 1 == handTile1[i]) {
-                result->han++;
+                resultTemp->han++;
             } else if (dora1[j] == zhong && handTile1[i] == bai) {
-                result->han++;
+                resultTemp->han++;
             }
         }
     }
@@ -898,22 +983,22 @@ void AddDora(Status status, int *handTile1, GroupInt *groupTile1, int *dora1) {
                 for (int j = 0; j < sizeof(dora1) / sizeof(dora1[0]); j++) {
                     if (dora1[j] < east) {
                         if (dora1[j] % 9 + dora1[j] / 9 + 1 == groupTile1[i].groupHaiInt[k]) {
-                            result->han++;
+                            resultTemp->han++;
                         }
                     } else if (dora1[j] < north && dora1[j] + 1 == groupTile1[i].groupHaiInt[k]) {
-                        result->han++;
+                        resultTemp->han++;
                     } else if (dora1[j] == north && groupTile1[i].groupHaiInt[k] == east) {
-                        result->han++;
+                        resultTemp->han++;
                     } else if (dora1[j] < zhong && dora1[j] + 1 == groupTile1[i].groupHaiInt[k]) {
-                        result->han++;
+                        resultTemp->han++;
                     } else if (dora1[j] == zhong && groupTile1[i].groupHaiInt[k] == bai) {
-                        result->han++;
+                        resultTemp->han++;
                     }
                 }
             }
         }
     }
-    result->han += Dora;
+    resultTemp->han += Dora;
 }
 
 /// @brief 增加里宝牌番数
@@ -926,16 +1011,16 @@ void AddUradora(Status status, int *handTile1, GroupInt *groupTile1, int *urador
         for (int j = 0; j < sizeof(uradora1) / sizeof(uradora1[0]); i++) {
             if (uradora1[j] < east) {
                 if (uradora1[j] % 9 + uradora1[j] / 9 + 1 == handTile1[i]) {
-                    result->han++;
+                    resultTemp->han++;
                 }
             } else if (uradora1[j] < north && uradora1[j] + 1 == handTile1[i]) {
-                result->han++;
+                resultTemp->han++;
             } else if (uradora1[j] == north && handTile1[i] == east) {
-                result->han++;
+                resultTemp->han++;
             } else if (uradora1[j] < zhong && uradora1[j] + 1 == handTile1[i]) {
-                result->han++;
+                resultTemp->han++;
             } else if (uradora1[j] == zhong && handTile1[i] == bai) {
-                result->han++;
+                resultTemp->han++;
             }
         }
     }
@@ -945,16 +1030,16 @@ void AddUradora(Status status, int *handTile1, GroupInt *groupTile1, int *urador
                 for (int j = 0; j < sizeof(uradora1) / sizeof(uradora1[0]); j++) {
                     if (uradora1[j] < east) {
                         if (uradora1[j] % 9 + uradora1[j] / 9 + 1 == groupTile1[i].groupHaiInt[k]) {
-                            result->han++;
+                            resultTemp->han++;
                         }
                     } else if (uradora1[j] < north && uradora1[j] + 1 == groupTile1[i].groupHaiInt[k]) {
-                        result->han++;
+                        resultTemp->han++;
                     } else if (uradora1[j] == north && groupTile1[i].groupHaiInt[k] == east) {
-                        result->han++;
+                        resultTemp->han++;
                     } else if (uradora1[j] < zhong && uradora1[j] + 1 == groupTile1[i].groupHaiInt[k]) {
-                        result->han++;
+                        resultTemp->han++;
                     } else if (uradora1[j] == zhong && groupTile1[i].groupHaiInt[k] == bai) {
-                        result->han++;
+                        resultTemp->han++;
                     }
                 }
             }

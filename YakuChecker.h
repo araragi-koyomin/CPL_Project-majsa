@@ -2,7 +2,7 @@
 
 void IsMenzenchintsumohou(Status status, int *yakunum);
 
-void IsRiichi(Status status, int *yakunum);
+bool IsRiichi(Status status, int *yakunum);
 
 void IsDoubleRiichi(Status status, int *yakunum);
 
@@ -36,7 +36,7 @@ void IsSanankou(Status status, int *yakunum);
 
 void IsSankantsu(Status status, int *yakunum);
 
-void IsChiitoitsu(Status status, int *yakunum, int handTile1[]);
+bool IsChiitoitsu(Status status, int *yakunum, int handTile1[]);
 
 void IsHonroutou(Status status, int *yakunum, int *handTile1);
 
@@ -44,11 +44,11 @@ void IsShousangan(Status status, int *yakunum);
 
 void IsHonitsu(Status status, int *yakunum, int handTile1[]);
 
-void IsJunchantaiyao(Status status, int *yakunum, int handTile1[]);
+bool IsJunchantaiyao(Status status, int *yakunum, int handTile1[]);
 
-void IsRyanpeikou(Status status, int *yakunum);
+bool IsRyanpeikou(Status status, int *yakunum);
 
-void IsChinitsu(Status status, int *yakunum, int *handTile1);
+bool IsChinitsu(Status status, int *yakunum, int *handTile1);
 
 void IsKokushimusou(Status status, int *yakunum, int handTile1[]);
 
@@ -72,13 +72,13 @@ void IsTenhou(Status status, int *yakunum);
 
 void IsChiihou(Status status, int *yakunum);
 
-void IsSuuankoutanki(Status status, int *yakunum);
+bool IsSuuankoutanki(Status status, int *yakunum);
 
 void IsDaisuushii(Status status, int *yakunum);
 
-void IsJunseichuurenpoutou(Status status, int *yakunum, int handTile1[]);
+bool IsJunseichuurenpoutou(Status status, int *yakunum, int handTile1[]);
 
-void YakuCheck(Status status, int handTile1[], GroupInt groupInt[], int discardTile1[], int currentTile);
+void YakuCheck(Status status, int handTile1[], GroupInt groupTile1[], int discardTile1[], int currentTile);
 
 ///////////////////////////////////////////////////////上面为役，下面为宝牌///////////////////////////////////////////////////////////////////
 
@@ -103,4 +103,8 @@ bool IsMenzenchin2(const Status status) {
         if (groupTile1[i].fulutype != Ankan) return false;
     }
     return true;
+}
+
+bool CmpYaku(const void *a, const void *b) {
+    return *(int*)a - *(int*)b;
 }
