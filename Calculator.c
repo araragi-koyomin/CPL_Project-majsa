@@ -4,7 +4,7 @@
 /// @param status 
 /// @param handTile 
 /// @param groupTile1 
-void CalFu(Status status, int handTile[], GroupInt groupTile1[]) {
+void CalFu(Status status, int handTile1[], GroupInt groupTile1[]) {
     /*特殊规则*/
     // 七对子
     for (int i = 0; i < sizeof(resultTemp->yaku) / sizeof(resultTemp->yaku[0]); i++) {
@@ -831,4 +831,13 @@ void CalPoi(Status status) {
         }
         }
     }
+}
+
+/// @brief 计算符数点数
+/// @param status 
+/// @param handTile1 
+/// @param groupTile1 
+void Calculator(Status status, int handTile1[], GroupInt groupTile1[]) {
+    CalFu(status, handTile1, groupTile1);
+    CalPoi(status);
 }

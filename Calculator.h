@@ -4,10 +4,14 @@ void CalFu(Status status, int handTile[], GroupInt groupTile1[]);
 
 void CalPoi(Status status);
 
+void Calculator(Status status, int handTile1[], GroupInt groupTile1[]);
+
 ///////////////////////////////////////辅助用函数///////////////////////
 
-bool IsMenzenchin3(const Status status) {
-    if(status.groupTile[0].groupHai[0] == 0) return true;
+bool IsMenzenchin3(const Status status)
+{
+    if (status.groupTile[0].tile[0] == 0)
+        return true;
     // for (int i = 0; i < sizeof(groupTile1) / sizeof(groupTile1[0]); i++) {
     //     if (groupTile1[i].fulutype != Ankan) return false;
     // }
@@ -15,10 +19,14 @@ bool IsMenzenchin3(const Status status) {
     return false;
 }
 
-bool IsMenzenchin4(const Status status) {
-    if(status.groupTile[0].groupHai[0] == 0) return true;
-    for (int i = 0; i < sizeof(groupTile1) / sizeof(groupTile1[0]); i++) {
-        if (groupTile1[i].fulutype != Ankan) return false;
+bool IsMenzenchin4(const Status status)
+{
+    if (status.groupTile[0].tile[0] == 0)
+        return true;
+    for (int i = 0; i < sizeof(groupTile1) / sizeof(groupTile1[0]); i++)
+    {
+        if (groupTile1[i].fulutype != Ankan)
+            return false;
     }
     return true;
 }
