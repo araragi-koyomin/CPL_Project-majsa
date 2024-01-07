@@ -93,7 +93,7 @@ bool AgariCheck(Status status, int *handTile1, int *discardTile1, int currentTil
     }
     else
     { // 副露状态（含暗杠）
-        int fuluNumber = sizeof(groupTile1) / sizeof(groupTile1[0]);
+        int fuluNumber = GroupTileLen;
         if (IsAgari(handTile1, 4 - fuluNumber, discardTile1, currentTile1, status))
         {
             if (IsFuritenInAgari(discardTile1, currentTile1, status))
@@ -122,7 +122,7 @@ bool AgariCheck(Status status, int *handTile1, int *discardTile1, int currentTil
 /// @param handTile1
 /// @param needMentsu
 /// @return 满足返回true，否则返回false
-bool IsAgari(int handTile1[], int needMentsu, const int *discardTile1, const int currentTile1, const Status status)
+bool IsAgari(int handTile1[], int needMentsu, int *discardTile1, int currentTile1, Status status)
 {
     bool flag = false;
     // 统计手牌中各牌个数，为虚听做好准备
@@ -156,9 +156,9 @@ bool IsAgari(int handTile1[], int needMentsu, const int *discardTile1, const int
 /// @param currentTile1
 /// @param status
 /// @return 振听返回true，否则返回false
-bool IsFuritenInAgari(const int *discardTile1, const int currentTile1, const Status status)
+bool IsFuritenInAgari(int *discardTile1, int currentTile1, Status status)
 {
-    for (int i = 0; i < sizeof(discardTile1) / sizeof(discardTile1[0]); i++)
+    for (int i = 0; i < DisLen; i++)
     {
         if (discardTile1[i] == currentTile1 && status.currentPlayer != JICHA)
             return true;
@@ -173,7 +173,7 @@ bool IsMenzenchin(const Status status)
 {
     if (status.groupTile[0].tile[0] == 0)
         return true;
-    for (int i = 0; i < sizeof(groupTile1) / sizeof(groupTile1[0]); i++)
+    for (int i = 0; i < GroupTileLen; i++)
     {
         if (groupTile1[i].fulutype != Ankan)
             return false;
@@ -184,9 +184,9 @@ bool IsMenzenchin(const Status status)
 /// @brief 判断是否为七对子牌型
 /// @param handTile1
 /// @return 是七对子则返回true, 否则返回false
-bool IsChiitoitsuHai(const int *handTile1)
+bool IsChiitoitsuHai(int *handTile1)
 {
-    for (int i = 0; i < sizeof(handTile1); i += 2)
+    for (int i = 0; i < handTilelLen; i += 2)
         if (handTile1[i] != handTile1[i + 1] || handTile1[i + 1] == handTile1[i + 2])
             return false;
     // printf("*chiitoitsu*");
@@ -200,7 +200,7 @@ bool IsChiitoitsuHai(const int *handTile1)
 int IsKoukushimusou(const int *handTile1, const int currentTile1)
 {
     int counts[zhong + 1] = {0}, flag = 1;
-    for (int i = 0; i < sizeof(handTile1); i++)
+    for (int i = 0; i < handTilelLen; i++)
     {
         if (handTile1[i] == im || handTile1[i] == km || handTile1[i] == ip || handTile1[i] == kp || handTile1[i] == is || handTile1[i] >= ks)
             counts[handTile1[i]]++;
@@ -307,7 +307,7 @@ bool FindShuntsu(int handTile1[], int index, int mentsu, int *discardTile1, int 
 /// @param handTile1
 /// @param index
 /// @return 能找到返回true，反之返回false
-bool FindKoutsu(int handTile1[], int index, int mentsu, const int *discardTile1, const int currentTile1, const Status status, const int bucket[], int needMentsu)
+bool FindKoutsu(int handTile1[], int index, int mentsu, int *discardTile1, int currentTile1, Status status, int bucket[], int needMentsu)
 {
     // 返回成功条件：手牌清空
     int flag = 0;
@@ -379,7 +379,7 @@ int Cmp(const void *a, const void *b)
 /// @param status
 /// @param handTile1
 /// @return 听牌返回true， 未听返回false
-bool Is41Tennpai(int mentsu, int *discardTile1, int currentTile1, Status status, int handTile1[], const int bucket[])
+bool Is41Tennpai(int mentsu, int *discardTile1, int currentTile1, Status status, int handTile1[], int bucket[])
 {
     bool flag = false;
     if (mentsu != 3)
@@ -395,7 +395,7 @@ bool Is41Tennpai(int mentsu, int *discardTile1, int currentTile1, Status status,
         {
             flag = true, result->machi++;
             // 检验振听
-            for (int j = 0; j < sizeof(discardTile1) / sizeof(discardTile1[0]); j++)
+            for (int j = 0; j < DisLen; j++)
                 if (nokoru[i] == discardTile1[j])
                 {
                     result->type = FURITEN;
@@ -408,7 +408,7 @@ bool Is41Tennpai(int mentsu, int *discardTile1, int currentTile1, Status status,
         if (nokoru[0] == im + 9 * i && nokoru[1] == nm + 9 * i && bucket[nokoru[0] + 2] != 4)
         {
             flag = true, result->machi++;
-            for (int j = 0; j < sizeof(discardTile1) / sizeof(discardTile1[0]); j++)
+            for (int j = 0; j < DisLen; j++)
                 if (nokoru[0] + 2 == discardTile1[j])
                 {
                     result->type = FURITEN;
@@ -418,7 +418,7 @@ bool Is41Tennpai(int mentsu, int *discardTile1, int currentTile1, Status status,
         if (nokoru[1] == hm + 9 * i && nokoru[2] == hm + 9 * i && bucket[nokoru[1] - 1] != 4)
         {
             flag = true, result->machi++;
-            for (int j = 0; j < sizeof(discardTile1) / sizeof(discardTile1[0]); j++)
+            for (int j = 0; j < DisLen; j++)
                 if (nokoru[1] - 1 == discardTile1[j])
                 {
                     result->type = FURITEN;
@@ -432,7 +432,7 @@ bool Is41Tennpai(int mentsu, int *discardTile1, int currentTile1, Status status,
         if (nokoru[0] == nokoru[2] - 1 && nokoru[2] != im + 9 * i && nokoru[2] != nm + 9 * i && bucket[nokoru[0] + 1] != 4)
         {
             flag = true, result->machi++;
-            for (int j = 0; j < sizeof(discardTile1) / sizeof(discardTile1[0]); j++)
+            for (int j = 0; j < DisLen; j++)
                 if (nokoru[0] + 1 == discardTile1[j])
                 {
                     result->type = FURITEN;
@@ -450,7 +450,7 @@ bool Is41Tennpai(int mentsu, int *discardTile1, int currentTile1, Status status,
                 if (bucket[nokoru[k] - 1] != 4)
                 {
                     flag = true, result->machi++;
-                    for (int j = 0; j < sizeof(discardTile1) / sizeof(discardTile1[0]); j++)
+                    for (int j = 0; j < DisLen; j++)
                         if (nokoru[k] - 1 == discardTile1[j])
                         {
                             result->type = FURITEN;
@@ -460,7 +460,7 @@ bool Is41Tennpai(int mentsu, int *discardTile1, int currentTile1, Status status,
                 if (bucket[nokoru[k + 1] + 1] != 4)
                 {
                     flag = true, result->machi++;
-                    for (int j = 0; j < sizeof(discardTile1) / sizeof(discardTile1[0]); j++)
+                    for (int j = 0; j < DisLen; j++)
                         if (nokoru[k + 1] + 1 == discardTile1[j])
                         {
                             result->type = FURITEN;
@@ -485,7 +485,7 @@ bool Is41Tennpai(int mentsu, int *discardTile1, int currentTile1, Status status,
 /// @param currentTile1
 /// @param status
 /// @return 听了返回true，没听返回false
-bool Is7gTennpai(const int handTile1[], const int *discardTile1, const int currentTile1, const Status status)
+bool Is7gTennpai(int handTile1[], int *discardTile1, int currentTile1, Status status)
 {
     // 七对
     int bucket[zhong + 1] = {0}, count = 0, flag = 0;
@@ -503,7 +503,7 @@ bool Is7gTennpai(const int handTile1[], const int *discardTile1, const int curre
         {
             if (bucket[handTile1[i]] % 2 == 1)
             {
-                for (int j = 0; j < sizeof(discardTile1) / sizeof(discardTile1[0]); j++)
+                for (int j = 0; j < DisLen; j++)
                 {
                     if (discardTile1[j] == handTile1[i])
                     {
@@ -537,7 +537,7 @@ bool Is7gTennpai(const int handTile1[], const int *discardTile1, const int curre
     }
     if (count == 13)
     {
-        for (int i = 0; i < sizeof(discardTile1) / sizeof(discardTile1[0]); i++)
+        for (int i = 0; i < DisLen; i++)
         {
             if (discardTile1[i] == im || discardTile1[i] == km || discardTile1[i] == ip || discardTile1[i] == kp || discardTile1[i] == is || discardTile1[i] == ks ||
                 discardTile1[i] == east || discardTile1[i] == south || discardTile1[i] == west || discardTile1[i] == north ||
@@ -562,7 +562,7 @@ bool Is7gTennpai(const int handTile1[], const int *discardTile1, const int curre
         {
             if (!bucket[im + 9 * i])
             {
-                for (int j = 0; j < sizeof(discardTile1) / sizeof(discardTile1[0]); j++)
+                for (int j = 0; j < DisLen; j++)
                 {
                     if (bucket[im + 9 * i] == discardTile1[j])
                     {
@@ -576,7 +576,7 @@ bool Is7gTennpai(const int handTile1[], const int *discardTile1, const int curre
             }
             else if (!bucket[km + 9 * i])
             {
-                for (int j = 0; j < sizeof(discardTile1) / sizeof(discardTile1[0]); j++)
+                for (int j = 0; j < DisLen; j++)
                 {
                     if (bucket[im + 9 * i] == discardTile1[j])
                     {
@@ -593,7 +593,7 @@ bool Is7gTennpai(const int handTile1[], const int *discardTile1, const int curre
         {
             if (!bucket[i])
             {
-                for (int j = 0; j < sizeof(discardTile1) / sizeof(discardTile1[0]); j++)
+                for (int j = 0; j < DisLen; j++)
                 {
                     if (bucket[i] == discardTile1[j])
                     {

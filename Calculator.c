@@ -85,7 +85,7 @@ void CalFu(Status status, int handTile1[], GroupInt groupTile1[]) {
     }
     // 中张明暗杠
     if (!IsMenzenchin3(status)) {
-        for (int i = 0; i < sizeof(groupTile1) / sizeof(groupTile1[0]); i++) {
+        for (int i = 0; i < GroupTileLen; i++) {
             if (groupTile1[i].fulutype == Ankan) {
                 resultTemp->fu += 16;
                 // 幺九明杠
@@ -119,7 +119,7 @@ void CalFu(Status status, int handTile1[], GroupInt groupTile1[]) {
     /*特殊规则*/
     // 吃
     if (!IsMenzenchin4(status)) {
-        for (int i = 0; i < sizeof(groupTile1) / sizeof(groupTile1[0]); i++) {
+        for (int i = 0; i < GroupTileLen; i++) {
             if (groupTile1[i].fulutype == Shuntsu && resultTemp->fu <= 30) {
                 resultTemp->fu = 30;
             }
@@ -840,4 +840,27 @@ void CalPoi(Status status) {
 void Calculator(Status status, int handTile1[], GroupInt groupTile1[]) {
     CalFu(status, handTile1, groupTile1);
     CalPoi(status);
+}
+
+bool IsMenzenchin3(const Status status)
+{
+    if (status.groupTile[0].tile[0] == 0)
+        return true;
+    // for (int i = 0; i < sizeof(groupTile1) / sizeof(groupTile1[0]); i++) {
+    //     if (groupTile1[i].fulutype != Ankan) return false;
+    // }
+    // return true;
+    return false;
+}
+
+bool IsMenzenchin4(const Status status)
+{
+    if (status.groupTile[0].tile[0] == 0)
+        return true;
+    for (int i = 0; i < GroupTileLen; i++)
+    {
+        if (groupTile1[i].fulutype != Ankan)
+            return false;
+    }
+    return true;
 }

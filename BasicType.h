@@ -35,7 +35,7 @@ struct groupInt
   int groupHaiInt[4];
 };
 typedef struct groupInt GroupInt;
-GroupInt groupTile1[30];
+extern GroupInt groupTile1[30];
 
 typedef enum
 {
@@ -156,15 +156,17 @@ enum hailist
 };
 typedef enum hailist HaiList;
 
-int handTile1[14], discardTile1[30], currentTile1, uradora1[6], dora1[6];
+extern int handTile1[14], discardTile1[30], currentTile1, uradora1[6], dora1[6];
 
-int Fan, Dora, Fu;
+extern int Fan, Dora, Fu;
 
 typedef struct mentsutype
 {
   int shuntsunum, koutsunum;
   int shun[4][3], kou[4][4], jyan[2];
 } MentsuType;
-MentsuType mentsuType;
+extern MentsuType mentsuType;
+
+extern int handTilelLen, GroupTileLen, GroupEachLen[30], doraLen, DisLen;
 
 #endif // BASICTYPE_H

@@ -163,3 +163,23 @@ void HaiTrans(Status status)
     }
     handTile1[13] = currentTile1;
 }
+
+void GetLen(Status status, int *handTilelLen, int *GroupTileLen, int handTile1[], GroupInt groupTile1[], int GroupEachLen[], int *doraLen, int dora1[], int *DisLen, int discardTile1[]) {
+    for (int i = 0; handTile1[i] != '\0'; i++) {
+        (*handTilelLen)++;
+    }
+    for (int i = 0; groupTile1[i].groupHaiInt[0] != '\0'; i++) {
+        (*GroupTileLen)++;
+    }
+    for (int i = 0; i < *GroupTileLen; i++) {
+        for (int j = 0; groupTile1[i].groupHaiInt[j] != '\0'; j++) {
+            GroupEachLen[i]++;
+        }
+    }
+    for (int i = 0; dora1[i] != '\0'; i++) {
+        (*doraLen)++;
+    }
+    for (int i = 0; discardTile1[i] = '\0'; i++) {
+        (*DisLen)++;
+    }
+}

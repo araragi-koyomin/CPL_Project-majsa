@@ -1,6 +1,13 @@
 #include "main.h"
 #include "majsa.h"
 
+GroupInt groupTile1[30];
+int handTile1[14], discardTile1[30], currentTile1, uradora1[6], dora1[6];
+int Fan, Dora, Fu;
+MentsuType mentsuType;
+int handTilelLen, GroupTileLen, GroupEachLen[30], doraLen, DisLen;
+Result *resultTemp, *result;
+
 int main(){
   Status status = {
       .bakaze = TON,
@@ -19,7 +26,7 @@ int main(){
       .isIppatsu=false,
       .isRinshan=false,
   };
-  Result *result = majsa(&status);
+  result = majsa(&status);
   assert(result->type == TSUMO);
   Yaku stdYaku[1] = {Kokushijuusanmenmachi};
   assert(sizeof(result->yaku) == sizeof(stdYaku));
