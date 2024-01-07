@@ -85,26 +85,26 @@ typedef enum {
   Honitsu = 0x301,             // 混一色（门清）
   HonitsuF = 0x221,            // 混一色（副露）
 
-  Nagashimangan = 0x500,  // 流局满贯（排除）
-  Chinitsu = 0x600,       // 清一色（门清）
-  ChinitsuF = 0x520,      // 清一色（副露）
+    Nagashimangan = 0x500,  // 流局满贯（排除）
+    Chinitsu = 0x600,       // 清一色（门清）
+    ChinitsuF = 0x520,      // 清一色（副露）
 
-  Tenhou = 0xd00,         // 天和
-  Chihou = 0xd01,         // 地和
-  Daisangen = 0xd02,      // 大三元
-  Suuankou = 0xd10,       // 四暗刻
-  Tsuuiisou = 0xd03,      // 字一色
-  Ryuuiisou = 0xd04,      // 绿一色
-  Chinroutou = 0xd05,     // 清老头
-  Kokushimusou = 0xd11,   // 国士无双
-  Shousuushi = 0xd06,     // 小四喜
-  Suukantsu = 0xd07,      // 四杠子
-  Chuurenpoutou = 0xd12,  // 九莲宝灯
+    Tenhou = 0xd00,         // 天和
+    Chihou = 0xd01,         // 地和
+    Daisangen = 0xd02,      // 大三元
+    Suuankou = 0xd10,       // 四暗刻
+    Tsuuiisou = 0xd03,      // 字一色
+    Ryuuiisou = 0xd04,      // 绿一色
+    Chinroutou = 0xd05,     // 清老头
+    Kokushimusou = 0xd11,   // 国士无双
+    Shousuushi = 0xd06,     // 小四喜
+    Suukantsu = 0xd07,      // 四杠子
+    Chuurenpoutou = 0xd12,  // 九莲宝灯
 
-  Suuankoutanki = 0xf10,          // 四暗刻单骑
-  Kokushijuusanmenmachi = 0xf11,  // 国士无双十三面
-  Chuurenkyuumenmachi = 0xf12,    // 纯正九莲宝灯
-  Daisuushi = 0xf00,              // 大四喜
+    Suuankoutanki = 0xf10,          // 四暗刻单骑
+    Kokushijuusanmenmachi = 0xf11,  // 国士无双十三面
+    Chuurenkyuumenmachi = 0xf12,    // 纯正九莲宝灯
+    Daisuushi = 0xf00,              // 大四喜
 } Yaku;
 
 
