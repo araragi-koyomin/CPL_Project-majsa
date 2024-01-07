@@ -95,7 +95,7 @@ bool AgariCheck(Status status, int *handTile1, int *discardTile1, int currentTil
             // 检验是否七对听牌或国士无双听牌
             if (!Is7gTennpai(handTile1, discardTile1, currentTile1, status)) {
                 // 计算向听数
-
+                result->type = NOTEN;
             }
         }
     }
@@ -201,6 +201,11 @@ bool FindShuntsu(int handTile1[], int index, int mentsu, const int *discardTile1
         if (resultTemp->han) {
             result = result->point > resultTemp->point ? result : resultTemp;
         }
+        resultTemp->fu = 0;
+        resultTemp->han = 0;
+        memset(resultTemp->point, 0, 3);
+        resultTemp->type = NOTEN;
+        memset(resultTemp->yaku, 0, sizeof(resultTemp->yaku));
         return true;
     }
     if (index >= 12) return false;

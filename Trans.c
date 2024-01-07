@@ -53,7 +53,7 @@ void HaiTrans(Status status) {
             else if (status.groupTile[i].groupHai[j + 1] == 's') groupTile1[i].groupHaiInt[j / 2] = status.groupTile[i].groupHai[j] - '1' + is;
             else if (status.groupTile[i].groupHai[j + 1] == 'z') groupTile1[i].groupHaiInt[j / 2] = status.groupTile[i].groupHai[j] - '1' + east;
         }
-        groupTile1[i].fulutype = status.groupTile[]
+        // groupTile1[i].fulutype = status.groupTile[]
     }
     // 宝牌转换
     for (int i = 0; i < strlen(status.dora); i += 2) {

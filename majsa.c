@@ -1,6 +1,6 @@
 #include "majsa.h"
 
-void Cmp(const void *a, const void *b) {
+void CmpTrans(const void *a, const void *b) {
     return *(int *)a - *(int *)b;
 }
 Result *majsa(Status *status) {
@@ -9,7 +9,7 @@ Result *majsa(Status *status) {
     // 转换牌型
     HaiTrans(*status);
     // 排序
-    qsort(handTile1,sizeof(handTile1), sizeof(handTile1[0]), Cmp);
+    qsort(handTile1,sizeof(handTile1), sizeof(handTile1[0]), CmpTrans);
     // 检查胡牌
     if (AgariCheck(*status, handTile1, discardTile1, currentTile1, groupTile1)) {
         // 检查役种
