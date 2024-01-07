@@ -61,6 +61,12 @@
 ## 符数计算
 
 ![Alt text](image.png)
+*已解决*
+
+## 点数计算
+
+![Alt text](image-1.png)
+![Alt text](image-2.png)
 
 ## 现在进度
 

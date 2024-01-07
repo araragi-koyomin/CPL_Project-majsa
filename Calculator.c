@@ -127,4 +127,708 @@ void CalFu(Status status, int handTile[], GroupInt groupTile1[]) {
     }
 }
 
-void CalPoi();
+/// @brief 计算点数
+/// @param status 
+void CalPoi(Status status) {
+    if (status.jikaze == TON) {
+        // 一番
+        // 荣和
+        {
+        if (resultTemp->han == 1 && resultTemp->fu == 30 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 1500;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 40 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 2000;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 50 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 2400;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 60 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 2900;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 70 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 3400;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 80 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 3900;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 90 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 4400;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 100 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 4800;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 110 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 5300;
+        }
+        }
+        // 自摸
+        {
+        if (resultTemp->han == 1 && resultTemp->fu == 30 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 500;
+            resultTemp->point[TOIMEN] = 500;
+            resultTemp->point[SHIMOCHA] = 500;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 40 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 700;
+            resultTemp->point[TOIMEN] = 700;
+            resultTemp->point[SHIMOCHA] = 700;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 50 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 800;
+            resultTemp->point[TOIMEN] = 800;
+            resultTemp->point[SHIMOCHA] = 800;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 60 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 1000;
+            resultTemp->point[TOIMEN] = 1000;
+            resultTemp->point[SHIMOCHA] = 1000;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 70 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 1200;
+            resultTemp->point[TOIMEN] = 1200;
+            resultTemp->point[SHIMOCHA] = 1200;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 80 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 1300;
+            resultTemp->point[TOIMEN] = 1300;
+            resultTemp->point[SHIMOCHA] = 1300;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 90 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 1500;
+            resultTemp->point[TOIMEN] = 1500;
+            resultTemp->point[SHIMOCHA] = 1500;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 100 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 1600;
+            resultTemp->point[TOIMEN] = 1600;
+            resultTemp->point[SHIMOCHA] = 1600;
+        }
+        }
+        // 2番
+        // 荣和
+        {
+        if (resultTemp->han == 2 && resultTemp->fu == 25 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 2400;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 30 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 2900;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 40 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 3900;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 50 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 4800;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 60 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 5800;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 70 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 6800;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 80 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 7700;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 90 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 8700;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 100 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 9600;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 110 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 10600;
+        }
+        }
+        // 自摸
+        {
+        if (resultTemp->han == 2 && resultTemp->fu == 20 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 700;
+            resultTemp->point[TOIMEN] = 700;
+            resultTemp->point[SHIMOCHA] = 700;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 30 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 1000;
+            resultTemp->point[TOIMEN] = 1000;
+            resultTemp->point[SHIMOCHA] = 1000;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 40 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 1300;
+            resultTemp->point[TOIMEN] = 1300;
+            resultTemp->point[SHIMOCHA] = 1300;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 50 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 1600;
+            resultTemp->point[TOIMEN] = 1600;
+            resultTemp->point[SHIMOCHA] = 1600;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 60 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 2000;
+            resultTemp->point[TOIMEN] = 2000;
+            resultTemp->point[SHIMOCHA] = 2000;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 70 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 2300;
+            resultTemp->point[TOIMEN] = 2300;
+            resultTemp->point[SHIMOCHA] = 2300;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 80 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 2600;
+            resultTemp->point[TOIMEN] = 2600;
+            resultTemp->point[SHIMOCHA] = 2600;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 90 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 2900;
+            resultTemp->point[TOIMEN] = 2900;
+            resultTemp->point[SHIMOCHA] = 2900;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 100 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 3200;
+            resultTemp->point[TOIMEN] = 3200;
+            resultTemp->point[SHIMOCHA] = 3200;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 110 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 3600;
+            resultTemp->point[TOIMEN] = 3600;
+            resultTemp->point[SHIMOCHA] = 3600;
+        }
+        }
+        // 3番
+        // 荣和
+        {
+        if (resultTemp->han == 3 && resultTemp->fu == 25 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 4800;
+        }
+        if (resultTemp->han == 3 && resultTemp->fu == 30 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 5800;
+        }
+        if (resultTemp->han == 3 && resultTemp->fu == 40 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 7700;
+        }
+        if (resultTemp->han == 3 && resultTemp->fu == 50 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 9600;
+        }
+        if (resultTemp->han == 3 && resultTemp->fu == 60 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 11600;
+        }
+        if (resultTemp->han == 3 && resultTemp->fu >= 70 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 12000;
+        }
+        }
+        // 自摸
+        {
+        if (resultTemp->han == 3 && resultTemp->fu == 20 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 1300;
+            resultTemp->point[TOIMEN] = 1300;
+            resultTemp->point[SHIMOCHA] = 1300;
+        }
+        if (resultTemp->han == 3 && resultTemp->fu == 25 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 1600;
+            resultTemp->point[TOIMEN] = 1600;
+            resultTemp->point[SHIMOCHA] = 1600;
+        }
+        if (resultTemp->han == 3 && resultTemp->fu == 30 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 2000;
+            resultTemp->point[TOIMEN] = 2000;
+            resultTemp->point[SHIMOCHA] = 2000;
+        }
+        if (resultTemp->han == 3 && resultTemp->fu == 40 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 2600;
+            resultTemp->point[TOIMEN] = 2600;
+            resultTemp->point[SHIMOCHA] = 2600;
+        }
+        if (resultTemp->han == 3 && resultTemp->fu == 50 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 3200;
+            resultTemp->point[TOIMEN] = 3200;
+            resultTemp->point[SHIMOCHA] = 3200;
+        }
+        if (resultTemp->han == 3 && resultTemp->fu == 60 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 3900;
+            resultTemp->point[TOIMEN] = 3900;
+            resultTemp->point[SHIMOCHA] = 3900;
+        }
+        if (resultTemp->han == 3 && resultTemp->fu >= 70 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 4000;
+            resultTemp->point[TOIMEN] = 4000;
+            resultTemp->point[SHIMOCHA] = 4000;
+        }
+        }
+        // 4番
+        // 荣和
+        {
+        if (resultTemp->han == 4 && resultTemp->fu == 25 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 9600;
+        }
+        if (resultTemp->han == 4 && resultTemp->fu == 30 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 11600;
+        }
+        if (resultTemp->han == 4 && resultTemp->fu >= 40 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 12000;
+        }
+        }
+        // 自摸
+        {
+        if (resultTemp->han == 4 && resultTemp->fu == 20 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 2600;
+            resultTemp->point[TOIMEN] = 2600;
+            resultTemp->point[SHIMOCHA] = 2600;
+        }
+        if (resultTemp->han == 4 && resultTemp->fu == 25 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 3200;
+            resultTemp->point[TOIMEN] = 3200;
+            resultTemp->point[SHIMOCHA] = 3200;
+        }
+        if (resultTemp->han == 4 && resultTemp->fu == 30 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 3900;
+            resultTemp->point[TOIMEN] = 3900;
+            resultTemp->point[SHIMOCHA] = 3900;
+        }
+        if (resultTemp->han == 4 && resultTemp->fu >= 40 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 4000;
+            resultTemp->point[TOIMEN] = 4000;
+            resultTemp->point[SHIMOCHA] = 4000;
+        }
+        }
+        // 5番
+        // 荣和
+        {
+        if (resultTemp->han == 5 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 12000;
+        }
+        }
+        // 自摸
+        {
+        if (resultTemp->han == 5 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 4000;
+            resultTemp->point[TOIMEN] = 4000;
+            resultTemp->point[SHIMOCHA] = 4000;
+        }
+        }
+        // 67番
+        // 荣和
+        {
+        if ((resultTemp->han == 6 || resultTemp->han == 7) && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 18000;
+        }
+        }
+        // 自摸
+        {
+        if ((resultTemp->han == 6 || resultTemp->han == 7) && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 6000;
+            resultTemp->point[TOIMEN] = 6000;
+            resultTemp->point[SHIMOCHA] = 6000;
+        }
+        }
+        // 8910番
+        // 荣和
+        {
+        if ((resultTemp->han >= 8 && resultTemp->han <= 10) && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 24000;
+        }
+        }
+        // 自摸
+        {
+        if ((resultTemp->han >= 8 && resultTemp->han <= 10) && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 8000;
+            resultTemp->point[TOIMEN] = 8000;
+            resultTemp->point[SHIMOCHA] = 8000;
+        }
+        }
+        // 1112番
+        // 荣和
+        {
+        if ((resultTemp->han >= 11 && resultTemp->han <= 12) && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 36000;
+        }
+        }
+        // 自摸
+        {
+        if ((resultTemp->han >= 11 && resultTemp->han <= 12) && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 12000;
+            resultTemp->point[TOIMEN] = 12000;
+            resultTemp->point[SHIMOCHA] = 12000;
+        }
+        }
+        // 役满
+        // 荣和
+        {
+        if ((resultTemp->han >= 13 || resultTemp->han < 0) && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 48000;
+        }
+        }
+        // 自摸
+        {
+        if ((resultTemp->han >= 13 || resultTemp->han < 0) && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 16000;
+            resultTemp->point[TOIMEN] = 16000;
+            resultTemp->point[SHIMOCHA] = 16000;
+        }
+        }
+    } else {
+        // 一番
+        // 荣和
+        {
+        if (resultTemp->han == 1 && resultTemp->fu == 30 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 1000;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 40 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 1300;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 50 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 1600;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 60 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 2000;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 70 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 2300;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 80 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 2600;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 90 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 2900;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 100 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 3200;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 110 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 3600;
+        }
+        }
+        // 自摸
+        {
+        if (resultTemp->han == 1 && resultTemp->fu == 30 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 300;
+            resultTemp->point[TOIMEN] = 300;
+            resultTemp->point[SHIMOCHA] = 300;
+            resultTemp->point[JICHA + status.jikaze - TON] = 500;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 40 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 400;
+            resultTemp->point[TOIMEN] = 400;
+            resultTemp->point[SHIMOCHA] = 400;
+            resultTemp->point[JICHA + status.jikaze - TON] = 700;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 60 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 500;
+            resultTemp->point[TOIMEN] = 500;
+            resultTemp->point[SHIMOCHA] = 500;
+            resultTemp->point[JICHA + status.jikaze - TON] = 1000;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 70 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 600;
+            resultTemp->point[TOIMEN] = 600;
+            resultTemp->point[SHIMOCHA] = 600;
+            resultTemp->point[JICHA + status.jikaze - TON] = 1200;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 80 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 700;
+            resultTemp->point[TOIMEN] = 700;
+            resultTemp->point[SHIMOCHA] = 700;
+            resultTemp->point[JICHA + status.jikaze - TON] = 1300;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 90 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 800;
+            resultTemp->point[TOIMEN] = 800;
+            resultTemp->point[SHIMOCHA] = 800;
+            resultTemp->point[JICHA + status.jikaze - TON] = 1500;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 100 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 800;
+            resultTemp->point[TOIMEN] = 800;
+            resultTemp->point[SHIMOCHA] = 800;
+            resultTemp->point[JICHA + status.jikaze - TON] = 1600;
+        }
+        if (resultTemp->han == 1 && resultTemp->fu == 500 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 400;
+            resultTemp->point[TOIMEN] = 400;
+            resultTemp->point[SHIMOCHA] = 400;
+            resultTemp->point[JICHA + status.jikaze - TON] = 800;
+        }
+        }
+        // 2番
+        // 荣和
+        {
+        if (resultTemp->han == 2 && resultTemp->fu == 25 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 1600;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 30 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 2000;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 40 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 2600;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 50 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 3200;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 60 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 3900;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 70 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 4500;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 80 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 5200;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 90 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 5800;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 100 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 6400;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 110 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 7100;
+        }
+        }
+        // 自摸
+        {
+        if (resultTemp->han == 2 && resultTemp->fu == 20 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 400;
+            resultTemp->point[TOIMEN] = 400;
+            resultTemp->point[SHIMOCHA] = 400;
+            resultTemp->point[JICHA + status.jikaze - TON] = 700;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 30 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 500;
+            resultTemp->point[TOIMEN] = 500;
+            resultTemp->point[SHIMOCHA] = 500;
+            resultTemp->point[JICHA + status.jikaze - TON] = 1000;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 40 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 700;
+            resultTemp->point[TOIMEN] = 700;
+            resultTemp->point[SHIMOCHA] = 700;
+            resultTemp->point[JICHA + status.jikaze - TON] = 1300;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 50 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 800;
+            resultTemp->point[TOIMEN] = 800;
+            resultTemp->point[SHIMOCHA] = 800;
+            resultTemp->point[JICHA + status.jikaze - TON] = 1600;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 60 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 1000;
+            resultTemp->point[TOIMEN] = 1000;
+            resultTemp->point[SHIMOCHA] = 1000;
+            resultTemp->point[JICHA + status.jikaze - TON] = 2000;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 70 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 1200;
+            resultTemp->point[TOIMEN] = 1200;
+            resultTemp->point[SHIMOCHA] = 1200;
+            resultTemp->point[JICHA + status.jikaze - TON] = 2300;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 80 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 1300;
+            resultTemp->point[TOIMEN] = 1300;
+            resultTemp->point[SHIMOCHA] = 1300;
+            resultTemp->point[JICHA + status.jikaze - TON] = 2600;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 90 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 1500;
+            resultTemp->point[TOIMEN] = 1500;
+            resultTemp->point[SHIMOCHA] = 1500;
+            resultTemp->point[JICHA + status.jikaze - TON] = 2900;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 100 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 1600;
+            resultTemp->point[TOIMEN] = 1600;
+            resultTemp->point[SHIMOCHA] = 1600;
+            resultTemp->point[JICHA + status.jikaze - TON] = 3200;
+        }
+        if (resultTemp->han == 2 && resultTemp->fu == 110 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 1800;
+            resultTemp->point[TOIMEN] = 1800;
+            resultTemp->point[SHIMOCHA] = 1800;
+            resultTemp->point[JICHA + status.jikaze - TON] = 3600;
+        }
+        }
+        // 3番
+        // 荣和
+        {
+        if (resultTemp->han == 3 && resultTemp->fu == 25 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 3200;
+        }
+        if (resultTemp->han == 3 && resultTemp->fu == 30 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 3900;
+        }
+        if (resultTemp->han == 3 && resultTemp->fu == 40 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 5200;
+        }
+        if (resultTemp->han == 3 && resultTemp->fu == 50 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 6400;
+        }
+        if (resultTemp->han == 3 && resultTemp->fu == 60 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 7700;
+        }
+        if (resultTemp->han == 3 && resultTemp->fu >= 70 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 8000;
+        }
+        }
+        // 自摸
+        {
+        if (resultTemp->han == 3 && resultTemp->fu == 20 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 700;
+            resultTemp->point[TOIMEN] = 700;
+            resultTemp->point[SHIMOCHA] = 700;
+            resultTemp->point[JICHA + status.jikaze - TON] = 1300;
+        }
+        if (resultTemp->han == 3 && resultTemp->fu == 25 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 800;
+            resultTemp->point[TOIMEN] = 800;
+            resultTemp->point[SHIMOCHA] = 800;
+            resultTemp->point[JICHA + status.jikaze - TON] = 1600;
+        }
+        if (resultTemp->han == 3 && resultTemp->fu == 30 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 1000;
+            resultTemp->point[TOIMEN] = 1000;
+            resultTemp->point[SHIMOCHA] = 1000;
+            resultTemp->point[JICHA + status.jikaze - TON] = 2000;
+        }
+        if (resultTemp->han == 3 && resultTemp->fu == 40 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 1300;
+            resultTemp->point[TOIMEN] = 1300;
+            resultTemp->point[SHIMOCHA] = 1300;
+            resultTemp->point[JICHA + status.jikaze - TON] = 2600;
+        }
+        if (resultTemp->han == 3 && resultTemp->fu == 50 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 1600;
+            resultTemp->point[TOIMEN] = 1600;
+            resultTemp->point[SHIMOCHA] = 1600;
+            resultTemp->point[JICHA + status.jikaze - TON] = 3200;
+        }
+        if (resultTemp->han == 3 && resultTemp->fu == 60 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 2000;
+            resultTemp->point[TOIMEN] = 2000;
+            resultTemp->point[SHIMOCHA] = 2000;
+            resultTemp->point[JICHA + status.jikaze - TON] = 3900;
+        }
+        if (resultTemp->han == 3 && resultTemp->fu >= 70 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 2000;
+            resultTemp->point[TOIMEN] = 2000;
+            resultTemp->point[SHIMOCHA] = 2000;
+            resultTemp->point[JICHA + status.jikaze - TON] = 4000;
+        }
+        }
+        // 4番
+        // 荣和
+        {
+        if (resultTemp->han == 4 && resultTemp->fu == 25 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 6400;
+        }
+        if (resultTemp->han == 4 && resultTemp->fu == 30 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 7700;
+        }
+        if (resultTemp->han == 4 && resultTemp->fu >= 40 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 8000;
+        }
+        }
+        // 自摸
+        {
+        if (resultTemp->han == 4 && resultTemp->fu == 20 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 1300;
+            resultTemp->point[TOIMEN] = 1300;
+            resultTemp->point[SHIMOCHA] = 1300;
+            resultTemp->point[JICHA + status.jikaze - TON] = 2600;
+        }
+        if (resultTemp->han == 4 && resultTemp->fu == 25 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 1600;
+            resultTemp->point[TOIMEN] = 1600;
+            resultTemp->point[SHIMOCHA] = 1600;
+            resultTemp->point[JICHA + status.jikaze - TON] = 3200;
+        }
+        if (resultTemp->han == 4 && resultTemp->fu == 30 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 2000;
+            resultTemp->point[TOIMEN] = 2000;
+            resultTemp->point[SHIMOCHA] = 2000;
+            resultTemp->point[JICHA + status.jikaze - TON] = 3900;
+        }
+        if (resultTemp->han == 4 && resultTemp->fu >= 40 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 2000;
+            resultTemp->point[TOIMEN] = 2000;
+            resultTemp->point[SHIMOCHA] = 2000;
+            resultTemp->point[JICHA + status.jikaze - TON] = 4000;
+        }
+        }
+        // 5番
+        // 荣和
+        {
+        if (resultTemp->han == 5 && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 8000;
+        }
+        }
+        // 自摸
+        {
+        if (resultTemp->han == 5 && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 2000;
+            resultTemp->point[TOIMEN] = 2000;
+            resultTemp->point[SHIMOCHA] = 2000;
+            resultTemp->point[JICHA + status.jikaze - TON] = 4000;
+        }
+        }
+        // 67番
+        // 荣和
+        {
+        if ((resultTemp->han == 6 || resultTemp->han == 7) && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 12000;
+        }
+        }
+        // 自摸
+        {
+        if ((resultTemp->han == 6 || resultTemp->han == 7) && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 3000;
+            resultTemp->point[TOIMEN] = 3000;
+            resultTemp->point[SHIMOCHA] = 3000;
+            resultTemp->point[JICHA + status.jikaze - TON] = 6000;
+        }
+        }
+        // 8910番
+        // 荣和
+        {
+        if ((resultTemp->han >= 8 && resultTemp->han <= 10) && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 16000;
+        }
+        }
+        // 自摸
+        {
+        if ((resultTemp->han >= 8 && resultTemp->han <= 10) && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 4000;
+            resultTemp->point[TOIMEN] = 4000;
+            resultTemp->point[SHIMOCHA] = 4000;
+            resultTemp->point[JICHA + status.jikaze - TON] = 8000;
+        }
+        }
+        // 1112番
+        // 荣和
+        {
+        if ((resultTemp->han >= 11 && resultTemp->han <= 12) && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 24000;
+        }
+        }
+        // 自摸
+        {
+        if ((resultTemp->han >= 11 && resultTemp->han <= 12) && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 6000;
+            resultTemp->point[TOIMEN] = 6000;
+            resultTemp->point[SHIMOCHA] = 6000;
+            resultTemp->point[JICHA + status.jikaze - TON] = 12000;
+        }
+        }
+        // 役满
+        // 荣和
+        {
+        if ((resultTemp->han >= 13 || resultTemp->han < 0) && resultTemp->type == RON) {
+            resultTemp->point[status.currentPlayer] = 32000;
+        }
+        }
+        // 自摸
+        {
+        if ((resultTemp->han >= 13 || resultTemp->han < 0) && resultTemp->type == TSUMO) {
+            resultTemp->point[KAMICHA] = 8000;
+            resultTemp->point[TOIMEN] = 8000;
+            resultTemp->point[SHIMOCHA] = 8000;
+            resultTemp->point[JICHA + status.jikaze - TON] = 16000;
+        }
+        }
+    }
+}

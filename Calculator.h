@@ -2,7 +2,7 @@
 
 void CalFu(Status status, int handTile[], GroupInt groupTile1[]);
 
-void CalPoi();
+void CalPoi(Status status);
 
 ///////////////////////////////////////辅助用函数///////////////////////
 

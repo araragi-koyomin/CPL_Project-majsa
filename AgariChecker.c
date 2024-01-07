@@ -199,7 +199,7 @@ bool FindShuntsu(int handTile1[], int index, int mentsu, const int *discardTile1
     if (checkIfZero == 14) {
         YakuCheck(status, handTile1, groupTile1, discardTile1, currentTile1);
         if (resultTemp->han) {
-            result = result->point > resultTemp->point ? result : resultTemp;
+            result = (result->point[0] + result->point[1] + result->point[2]) > (resultTemp->point[0] + resultTemp->point[1] + resultTemp->point[2]) ? result : resultTemp;
         }
         resultTemp->fu = 0;
         resultTemp->han = 0;
