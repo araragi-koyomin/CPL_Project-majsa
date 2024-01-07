@@ -1,3 +1,6 @@
+#ifndef YAKUCHECKER_H
+#define YAKUCHECKER_H
+
 #include "main.h"
 
 void IsMenzenchintsumohou(Status status, int *yakunum);
@@ -108,3 +111,5 @@ bool IsMenzenchin2(const Status status) {
 bool CmpYaku(const void *a, const void *b) {
     return *(int*)a - *(int*)b;
 }
+
+#endif // YAKUCHECKER_H

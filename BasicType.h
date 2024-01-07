@@ -1,3 +1,6 @@
+#ifndef BASICTYPE_H
+#define BASICTYPE_H
+
 #define MAX(a, b) (a > b ? a : b)
 
 /// @brief 风的类型
@@ -163,3 +166,5 @@ typedef struct mentsutype
   int shun[4][3], kou[4][4], jyan[2];
 } MentsuType;
 MentsuType mentsuType;
+
+#endif // BASICTYPE_H

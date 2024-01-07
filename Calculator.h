@@ -1,3 +1,7 @@
+#ifndef CALCULATOR_H
+#define CALCULATOR_H
+
+
 #include "main.h"
 
 void CalFu(Status status, int handTile[], GroupInt groupTile1[]);
@@ -30,3 +34,5 @@ bool IsMenzenchin4(const Status status)
     }
     return true;
 }
+
+#endif // CALCULATOR_H

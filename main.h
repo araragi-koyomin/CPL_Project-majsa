@@ -1,3 +1,7 @@
+#ifndef MAIN_H
+#define MAIN_H
+
+
 #include "BasicType.h"
 #include <stdbool.h>
 #include <stdlib.h>
@@ -39,3 +43,8 @@ struct result {
 typedef struct result Result;
 
 Result *result, *resultTemp;
+
+
+
+
+#endif // MAIN_H

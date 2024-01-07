@@ -1,4 +1,4 @@
-#include <Trans.h>
+#include "Trans.h"
 
 /// @brief 将手牌、进张、舍牌、副露、（里）宝牌转化为枚举结构
 /// @param status

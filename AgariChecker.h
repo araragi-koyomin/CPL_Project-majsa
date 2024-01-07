@@ -1,3 +1,7 @@
+#ifndef AGARICHECKER_H
+#define AGARICHECKER_H
+
+
 #include "main.h"
 
 bool AgariCheck(Status status, int *handTile1, int *discardTile1, int currentTile1, GroupInt *groupTile1);
@@ -21,3 +25,5 @@ bool Is41Tennpai(int mentsu, int *discardTile1, int currentTile1, Status status,
 bool Is7gTennpai(const int handTile1[], const int *discardTile1, const int currentTile1, const Status status);
 
 void FindMinusShanten();
+
+#endif //AGARICHECKER_H

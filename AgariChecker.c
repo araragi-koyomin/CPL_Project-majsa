@@ -297,7 +297,7 @@ bool FindShuntsu(int handTile1[], int index, int mentsu, const int *discardTile1
     // 计算向听数
     if (!IsTen)
     {
-        FindMinusShanten();
+        // FindMinusShanten();
     }
     return false;
 }
@@ -614,28 +614,28 @@ bool Is7gTennpai(const int handTile1[], const int *discardTile1, const int curre
     return false;
 }
 
-int main()
-{
-    Status status = {
-        .bakaze = TON,
-        .jikaze = TON,
-        .honbaCount = 0,
-        .dora = "0p",
-        .uradora = "0s",
-        .handTile = "8s8s8s8s8s8s8s8s8s8s8s8s8s",
-        .groupTile = {},
-        .discardTile = "7m5m1m4p1p",
-        .currentPlayer = SHIMOCHA,
-        .currentTile = "8s",
-        .remainTileCount = 36,
-        .isRiichi = true,
-        .isDoubleRiichi = false,
-        .isIppatsu = false,
-        .isRinshan = false,
-    };
-    HaiTrans(status);
-    qsort(handTile1, sizeof(handTile1) / sizeof(*handTile1), sizeof(*handTile1), Cmp);
-    int check = AgariCheck(status, handTile1, discardTile1, currentTile1, groupTile1);
+// int main()
+// {
+//     Status status = {
+//         .bakaze = TON,
+//         .jikaze = TON,
+//         .honbaCount = 0,
+//         .dora = "0p",
+//         .uradora = "0s",
+//         .handTile = "8s8s8s8s8s8s8s8s8s8s8s8s8s",
+//         .groupTile = {},
+//         .discardTile = "7m5m1m4p1p",
+//         .currentPlayer = SHIMOCHA,
+//         .currentTile = "8s",
+//         .remainTileCount = 36,
+//         .isRiichi = true,
+//         .isDoubleRiichi = false,
+//         .isIppatsu = false,
+//         .isRinshan = false,
+//     };
+//     HaiTrans(status);
+//     qsort(handTile1, sizeof(handTile1) / sizeof(*handTile1), sizeof(*handTile1), Cmp);
+//     int check = AgariCheck(status, handTile1, discardTile1, currentTile1, groupTile1);
 
     //   Result *result = majsa(&status);
     //   assert(result->type == TSUMO);
@@ -651,5 +651,5 @@ int main()
     //   assert(result->point[SHIMOCHA] == 32000);
     // assert(result->machi == 13);  // 已和牌，不考虑面听数
     // assert(result->shanten == 0);  // 已和牌，不考虑向听数
-    return 0;
-}
+//     return 0;
+// }
