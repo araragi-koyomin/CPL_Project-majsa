@@ -179,7 +179,7 @@ void GetLen(Status status, int *handTilelLen, int *GroupTileLen, int handTile1[]
     for (int i = 0; dora1[i] != '\0'; i++) {
         (*doraLen)++;
     }
-    for (int i = 0; discardTile1[i] = '\0'; i++) {
+    for (int i = 0; discardTile1[i] != '\0'; i++) {
         (*DisLen)++;
     }
 }

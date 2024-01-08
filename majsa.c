@@ -17,4 +17,5 @@ Result *majsa(Status *status) {
         // 检查役种
         // 计算符数、点数
     }
+    return result;
 }

@@ -25,6 +25,8 @@ bool AgariCheck(Status status, int *handTile1, int *discardTile1, int currentTil
                 return false;
             }
             // 未振听，返回true，表示胡牌
+            YakuCheck(status, handTile1, groupTile1, discardTile1, currentTile1);
+            result = resultTemp;
             return true;
         }
         // 国士无双判断
@@ -35,6 +37,8 @@ bool AgariCheck(Status status, int *handTile1, int *discardTile1, int currentTil
                 result->type = FURITEN;
                 return false;
             }
+            YakuCheck(status, handTile1, groupTile1, discardTile1, currentTile1);
+            result = resultTemp;
             return true;
         }
         // 接下来就是常见胡牌型判断
@@ -58,15 +62,15 @@ bool AgariCheck(Status status, int *handTile1, int *discardTile1, int currentTil
         int fuluNumber = GroupTileLen;
         if (IsAgari(handTile1, 4 - fuluNumber, discardTile1, currentTile1, status))
         {
-            if (IsFuritenInAgari(discardTile1, currentTile1, status))
-            {
+            // if (IsFuritenInAgari(discardTile1, currentTile1, status))
+            // {
                 if (IsFuritenInAgari(discardTile1, currentTile1, status))
                 {
                     result->type = FURITEN;
                     return false;
                 }
                 return true;
-            }
+            // }
         }
         else if (ismenzenchin)
         {
@@ -210,59 +214,47 @@ bool FindShuntsu(int handTile1[], int index, int mentsu, int *discardTile1, int 
     if (index >= 12)
         return false;
     // 寻找顺子
-    for (int i = index; i < 13; i++)
-    {
-        if (handTile1[i] == 0)
-            continue;
-        if (handTile1[i] == handTile1[index] + 1)
-        {
-            for (int j = i + 1; j < 14; j++)
-            {
-                if (handTile1[j] == handTile1[index] + 2)
-                {
-                    value1 = handTile1[index], value2 = handTile1[i], value3 = handTile1[j];
+    for (int i = index; i < 13; i++) {
+        if (handTile1[i] == 0) continue;
+
+        for (int j = i + 1; j < 14; j++) {
+            if (handTile1[j] == 0) continue;
+
+            for (int k = j + 1; k < 14; k++) {
+                if (handTile1[k] == 0) continue;
+
+                // 检查是否构成顺子
+                if (handTile1[i] + 1 == handTile1[j] && handTile1[j] + 1 == handTile1[k]) {
+                    value1 = handTile1[i], value2 = handTile1[j], value3 = handTile1[k];
                     mentsuType.shuntsunum++;
-                    mentsuType.shun[mentsuType.shuntsunum - 1][0] = value1,
-                                                            mentsuType.shun[mentsuType.shuntsunum - 1][1] = value2,
-                                                            mentsuType.shun[mentsuType.shuntsunum - 1][2] = value3;
-                    i1 = index, i2 = i, i3 = j;
-                    handTile1[index] = 0, handTile1[i] = 0, handTile1[j] = 0;
+                    handTile1[i] = handTile1[j] = handTile1[k] = 0;
                     flag = 1;
+                    i1 = i, i2 = j, i3 = k;
                     break;
-                    // 找到了就退出
                 }
             }
+            if (flag) break;
+        }
+        if (flag) break;
+    }
+
+    bool CanFind = false;
+    if (flag) {
+        // 递归寻找更多的顺子或刻子
+        CanFind = FindShuntsu(handTile1, index + 1, mentsu + 1, discardTile1, currentTile1, status, bucket, needMentsu);
+        if (!CanFind) {
+            // 如果未找到更多的组合，则回溯并减少shuntsunum
+            mentsuType.shuntsunum--;
+            handTile1[i1] = value1, handTile1[i2] = value2, handTile1[i3] = value3;
         }
     }
-    bool CanFind = FindShuntsu(handTile1, index + 1, mentsu + 1, discardTile1, currentTile1, status, bucket, needMentsu);
-    if (CanFind)
-    {
-        mentsuType.shuntsunum--;
-        memset(mentsuType.shun[mentsuType.shuntsunum], 0, sizeof(int) * 3);
+
+    if (!CanFind) {
+        // 如果当前路径未找到顺子，继续在下一个索引位置尝试寻找
+        CanFind = FindShuntsu(handTile1, index + 1, mentsu, discardTile1, currentTile1, status, bucket, needMentsu);
     }
-    // 检验是否听牌型
-    int IsTen = Is41Tennpai(mentsu, discardTile1, currentTile1, status, handTile1, bucket);
-    if (flag)
-        handTile1[i1] = value1, handTile1[i2] = value2, handTile1[i3] = value3;
-    // if (CanFind) return true;
-    CanFind = FindKoutsu(handTile1, index + 1, mentsu + 1, discardTile1, currentTile1, status, bucket, needMentsu);
-    if (CanFind)
-    {
-        mentsuType.koutsunum--;
-        memset(mentsuType.kou[mentsuType.koutsunum], 0, sizeof(int) * 3);
-    }
-    // 检验是否听牌型
-    IsTen += Is41Tennpai(mentsu, discardTile1, currentTile1, status, handTile1, bucket);
-    if (flag)
-        handTile1[i1] = value1, handTile1[i2] = value2, handTile1[i3] = value3;
-    if (CanFind)
-        return true;
-    // 计算向听数
-    if (!IsTen)
-    {
-        // FindMinusShanten();
-    }
-    return false;
+
+    return CanFind;
 }
 
 /// @brief 从当前索引号index向右寻找刻子
@@ -300,33 +292,31 @@ bool FindKoutsu(int handTile1[], int index, int mentsu, int *discardTile1, int c
         value1 = handTile1[index], value2 = handTile1[index + 1], value3 = handTile1[index + 2];
         handTile1[index] = 0, handTile1[index + 1] = 0, handTile1[index + 2] = 0;
         flag = 1;
+        mentsuType.koutsunum++;
     }
+    // 寻找顺子
     bool CanFind = FindShuntsu(handTile1, index + 1, mentsu + 1, discardTile1, currentTile1, status, bucket, needMentsu);
-    if (CanFind)
-    {
-        mentsuType.shuntsunum--;
-        memset(mentsuType.shun[mentsuType.shuntsunum], 0, sizeof(int) * 3);
-    }
+
     // 判断是否听牌
     Is41Tennpai(mentsu, discardTile1, currentTile1, status, handTile1, bucket);
+
     if (flag)
     {
         handTile1[index] = value1, handTile1[index + 1] = value2, handTile1[index + 2] = value3;
+        if (!CanFind) {
+            mentsuType.koutsunum--;
+        }
     }
-    // if (CanFind) return true;
+
+    if (CanFind) return true;
+
+    // 继续寻找刻子
     CanFind = FindKoutsu(handTile1, index + 1, mentsu + 1, discardTile1, currentTile1, status, bucket, needMentsu);
-    if (CanFind)
-    {
-        mentsuType.koutsunum--;
-        memset(mentsuType.kou[mentsuType.koutsunum], 0, sizeof(int) * 3);
-    }
+
     // 判断是否听牌
     Is41Tennpai(mentsu, discardTile1, currentTile1, status, handTile1, bucket);
-    if (flag)
-        handTile1[index] = value1, handTile1[index + 1] = value2, handTile1[index + 2] = value3;
-    if (CanFind)
-        return true;
-    return false;
+
+    return CanFind;
 }
 
 int Cmp(const void *a, const void *b)
