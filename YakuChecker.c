@@ -26,6 +26,7 @@ void YakuCheck(Status status, int handTile1[], GroupInt groupTile1[], int discar
 
     if (yakunum > 0) { 
         // 若为役满，则直接进行点数结算，不进行后续役种判断操作
+        resultTemp->type = status.currentPlayer == JICHA ? TSUMO : RON;
         qsort(resultTemp->yaku, yakunum, sizeof(int), CmpYaku);
         Calculator(status, handTile1, groupTile1);
         return;
@@ -69,6 +70,8 @@ void YakuCheck(Status status, int handTile1[], GroupInt groupTile1[], int discar
     IsToitoi(status, &yakunum);
 
     if (yakunum > 0) {
+        resultTemp->type = status.currentPlayer == JICHA ? TSUMO : RON;
+        qsort(resultTemp->yaku, yakunum, sizeof(int), CmpYaku);
         AddDora(status, handTile1, groupTile1, dora1);
         Calculator(status, handTile1, groupTile1);
         return;

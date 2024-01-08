@@ -1,44 +1,6 @@
 #include "AgariChecker.h"
 #include "YakuChecker.h"
 
-// struct status {
-//     KazeType bakaze;       // 场风
-//     KazeType jikaze;       // 自风
-//     int honbaCount;        // 本场棒数
-//     char dora[12];         // 宝牌指示牌
-//     char uradora[12];      // 里宝牌指示牌
-//     char handTile[30];     // 自家手牌
-//     Group groupTile[30];   // 自家副露区（包括暗杠）
-//     char discardTile[60];  // 自家舍牌区（包含被别家副露掉的牌）
-//     Player currentPlayer;  // 当前控牌玩家
-//     char currentTile[2];   // 当前控牌
-//     int remainTileCount;   // 牌山剩余牌数
-//     bool isRiichi;         // 是否已立直
-//     bool isDoubleRiichi;   // 是否为两立直
-//     bool isIppatsu;        // 是否为一发
-//     bool isRinshan;        // 是否为岭上牌
-// };
-// typedef struct status Status;
-
-// struct result {
-//     ResultType type;  // 结果类型
-//     Yaku yaku[20];    // 役种，排除古役、抢杠与流局满贯，请按升序排列
-//     int han;          // 番数，约定役满役种得到的番数为负数，X倍役满即为 -X，以此与累计役满区分
-//     int fu;           // 符数，国士无双时符数无意义
-//     int point[3];     // 点数，三家各自要给自家的点数，不考虑包牌，下标为 0=上家，1=对家，2=下家
-//     int machi;        // 面听数
-//     int shanten;      // 向听数
-// };
-// typedef struct result Result;
-
-// int handTile1[15], discardTile1[30], currentTile1, uradora1[6], dora1[6];
-
-// int Fan, Dora, Fu;
-
-// GroupInt groupTile1[30];
-
-/////////////////////////////////////////////////////////////以上为验证用main.c///////////////////////////////////////////////////////////////////////////
-
 /// @brief 判断是否为胡牌型
 /// @param status
 /// @param handTile1
@@ -78,8 +40,8 @@ bool AgariCheck(Status status, int *handTile1, int *discardTile1, int currentTil
         // 接下来就是常见胡牌型判断
         if (IsAgari(handTile1, 4, discardTile1, currentTile1, status))
         {
-            if (IsFuritenInAgari(discardTile1, currentTile1, status))
-            {
+            // if (IsFuritenInAgari(discardTile1, currentTile1, status))
+            // {
                 // 判断振听。若振听，结果类型为FURUTEN，返回false
                 if (IsFuritenInAgari(discardTile1, currentTile1, status))
                 {
@@ -88,7 +50,7 @@ bool AgariCheck(Status status, int *handTile1, int *discardTile1, int currentTil
                 }
                 // 未振听，返回true，表示胡牌
                 return true;
-            }
+            // }
         }
     }
     else
@@ -614,43 +576,3 @@ bool Is7gTennpai(int handTile1[], int *discardTile1, int currentTile1, Status st
     }
     return false;
 }
-
-// int main()
-// {
-//     Status status = {
-//         .bakaze = TON,
-//         .jikaze = TON,
-//         .honbaCount = 0,
-//         .dora = "0p",
-//         .uradora = "0s",
-//         .handTile = "8s8s8s8s8s8s8s8s8s8s8s8s8s",
-//         .groupTile = {},
-//         .discardTile = "7m5m1m4p1p",
-//         .currentPlayer = SHIMOCHA,
-//         .currentTile = "8s",
-//         .remainTileCount = 36,
-//         .isRiichi = true,
-//         .isDoubleRiichi = false,
-//         .isIppatsu = false,
-//         .isRinshan = false,
-//     };
-//     HaiTrans(status);
-//     qsort(handTile1, sizeof(handTile1) / sizeof(*handTile1), sizeof(*handTile1), Cmp);
-//     int check = AgariCheck(status, handTile1, discardTile1, currentTile1, groupTile1);
-
-    //   Result *result = majsa(&status);
-    //   assert(result->type == TSUMO);
-    //   Yaku stdYaku[1] = {Kokushijuusanmenmachi};
-    //   assert(sizeof(result->yaku) == sizeof(stdYaku));
-    //   for (int i = 0; i < sizeof(result->yaku) / sizeof(result->yaku[0]); i++){
-    // assert(result->yaku[i] == stdYaku[i]);
-    //   }
-    //   assert(result->han == -2);
-    // assert(result->fu == 30);  // 国士无双，不考虑符数
-    //   assert(result->point[KAMICHA] == 32000);
-    //   assert(result->point[TOIMEN] == 32000);
-    //   assert(result->point[SHIMOCHA] == 32000);
-    // assert(result->machi == 13);  // 已和牌，不考虑面听数
-    // assert(result->shanten == 0);  // 已和牌，不考虑向听数
-//     return 0;
-// }
