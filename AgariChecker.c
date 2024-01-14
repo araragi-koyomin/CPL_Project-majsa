@@ -205,7 +205,7 @@ bool FindShuntsu(int handTile1[], int index, int mentsu, int *discardTile1, int 
             if ((result->point[0] + result->point[1] + result->point[2]) < (resultTemp->point[0] + resultTemp->point[1] + resultTemp->point[2])) {
                 result->han = resultTemp->han;
                 result->fu = resultTemp->fu;
-                for (int i = KAMICHA; i < SHIMOCHA; i++) {
+                for (int i = KAMICHA; i <= SHIMOCHA; i++) {
                     result->point[i] = resultTemp->point[i];
                 }
                 result->type = resultTemp->type;
@@ -254,11 +254,13 @@ bool FindShuntsu(int handTile1[], int index, int mentsu, int *discardTile1, int 
     if (CanFind) {
         mentsuType.shuntsunum--;
         memset(mentsuType.shun[mentsuType.shuntsunum], 0, sizeof(int) * 3);
+        handTile1[i1] = value1, handTile1[i2] = value2, handTile1[i3] = value3;
     }
     CanFind = FindKoutsu(handTile1, index + 1, mentsu + 1, discardTile1, currentTile1, status, bucket, needMentsu);
     if (CanFind) {
         mentsuType.koutsunum--;
         memset(mentsuType.kou[mentsuType.koutsunum], 0, sizeof(int) * 3);
+        handTile1[i1] = value1, handTile1[i2] = value2, handTile1[i3] = value3;
     }
     if (result->type != TSUMO && result->type != RON) {
         // 检验是否听牌
@@ -302,7 +304,7 @@ bool FindKoutsu(int handTile1[], int index, int mentsu, int *discardTile1, int c
             if ((result->point[0] + result->point[1] + result->point[2]) < (resultTemp->point[0] + resultTemp->point[1] + resultTemp->point[2])) {
                 result->han = resultTemp->han;
                 result->fu = resultTemp->fu;
-                for (int i = KAMICHA; i < SHIMOCHA; i++) {
+                for (int i = KAMICHA; i <= SHIMOCHA; i++) {
                     result->point[i] = resultTemp->point[i];
                 }
                 result->type = resultTemp->type;
@@ -341,11 +343,13 @@ bool FindKoutsu(int handTile1[], int index, int mentsu, int *discardTile1, int c
     if (CanFind) {
         mentsuType.shuntsunum--;
         memset(mentsuType.shun[mentsuType.shuntsunum], 0, sizeof(int) * 3);
+        handTile1[i1] = value1, handTile1[i1 + 1] = value2, handTile1[i1 + 2] = value3;
     }
     CanFind = FindKoutsu(handTile1, index + 1, mentsu + 1, discardTile1, currentTile1, status, bucket, needMentsu);
     if (CanFind) {
         mentsuType.koutsunum--;
         memset(mentsuType.kou[mentsuType.koutsunum], 0, sizeof(int) * 3);
+        handTile1[i1] = value1, handTile1[i1 + 1] = value2, handTile1[i1 + 2] = value3;
     }
     if (result->type != TSUMO && result->type != RON) {
         // 检验是否听牌

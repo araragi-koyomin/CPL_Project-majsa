@@ -12,6 +12,7 @@ Result *majsa(Status *status) {
     GetLen(*status, &handTilelLen, &GroupTileLen, handTile1, groupTile1, GroupEachLen, &doraLen, dora1, &DisLen, discardTile1);
     // 排序
     qsort(handTile1,handTilelLen, sizeof(handTile1[0]), CmpTrans);
+    qsort(handTile2,handTilelLen, sizeof(handTile2[0]), CmpTrans);
     // 检查胡牌
     if (AgariCheck(*status, handTile1, discardTile1, currentTile1, groupTile1)) {
         // 检查役种

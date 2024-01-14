@@ -139,10 +139,11 @@ void IsPinfu(Status status, int *yakunum) {
 /// @param status 
 /// @param yakunum 
 void IsIipeikou(Status status, int *yakunum) {
+    if (!IsMenzenchin2(status)) return;
     int flag = 0;
     if (mentsuType.shuntsunum >= 2) {
         for (int i = 0; i < mentsuType.shuntsunum - 1; i++) {
-            for (int j = 1; j < mentsuType.shuntsunum; j++) {
+            for (int j = i + 1; j < mentsuType.shuntsunum; j++) {
                 if (mentsuType.shun[i][0] == mentsuType.shun[j][0]) {
                     resultTemp->han++;
                     resultTemp->yaku[(*yakunum)++] = Iipeikou;

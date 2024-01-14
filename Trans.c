@@ -169,7 +169,13 @@ void HaiTrans(Status status)
         else if (status.currentTile[i + 1] == 'z')
             currentTile1 = status.currentTile[i] - '1' + east;
     }
-    handTile1[13] = currentTile1;
+    for (int i = 0; i < 13; i++) {
+        if (handTile1[i] == 0) {
+            handTile1[i] = currentTile1;
+            handTile2[i] = currentTile1;
+            break;
+        }
+    }
 }
 
 void GetLen(Status status, int *handTilelLen, int *GroupTileLen, int handTile1[], GroupInt groupTile1[], int GroupEachLen[], int *doraLen, int dora1[], int *DisLen, int discardTile1[]) {
