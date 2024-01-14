@@ -10,16 +10,16 @@ Result *resultTemp, *result;
 
 int main(){
     Status status = {
-      .bakaze = TON,
-      .jikaze = TON,
+      .bakaze = NAN,
+      .jikaze = NAN,
       .honbaCount = 0,
-      .dora="1m",
-      .uradora="3s",
-      .handTile="1m9m1p9p1s9s1z2z3z4z5z6z7z",
-      .groupTile={},
-      .discardTile="2m3m4m5m3p4p5p6p2s3s4s5s",
-      .currentPlayer=JICHA,
-      .currentTile="1z",
+      .dora="7p",
+      .uradora="",
+      .handTile="4s5s6s6s7s7s8s8s2z2z",
+      .groupTile={{Koutsu, "6z6z6z"}},
+      .discardTile="1m9m9m2p8p1z7z8s6z6p2s1s",
+      .currentPlayer=SHIMOCHA,
+      .currentTile="6s",
       .remainTileCount=18,
       .isRiichi=false,
       .isDoubleRiichi=false,
@@ -63,35 +63,37 @@ int main(){
     resultTemp->machi = 0;
     resultTemp->shanten = 0;
 
-    // result = majsa(&status);
-    // assert(result->type == TSUMO);
+    result = majsa(&status);
+    assert(result->type == RON);
     // printf("Result Type error!\n");
-    // Yaku stdYaku[1] = {Kokushijuusanmenmachi};
-    // assert(sizeof(result->yaku) == sizeof(stdYaku));
+    Yaku stdYaku[2] = {YakuhaiHaku, HonitsuF};
+    printf("%d\n", sizeof(result->yaku));
+    printf("%d\n", sizeof(stdYaku));
+    assert(sizeof(result->yaku) == sizeof(stdYaku));
     // printf("Result Yaku error!\n");
-    // for (int i = 0; i < sizeof(result->yaku) / sizeof(result->yaku[0]); i++){
-    //     assert(result->yaku[i] == stdYaku[i]);
-    //     printf("Result Yaku[%d] != stdYaku[%d] (%d)!\n");
-    // }
-    // assert(result->han == -2);
-    // printf("Result Han Error!\n");
-    // // assert(result->fu == 30);  // 国士无双，不考虑符数
-    // assert(result->point[KAMICHA] == 32000);
-    // assert(result->point[TOIMEN] == 32000);
-    // assert(result->point[SHIMOCHA] == 32000);
-    // printf("Result Point Error!\n");
-    // // assert(result->machi == 13);  // 已和牌，不考虑面听数
-    // // assert(result->shanten == 0);  // 已和牌，不考虑向听数
-    if (result->han) {
-        printf("%d %d %d\n", result->type, result->han, result->fu);
-        for (int i = 0; i < 3; i++) {
-            printf("%d%c", result->point[i], " \n"[i == 2]);
-        }
-        for (int i = 0; result->yaku[i] != 0; i++) {
-            printf("%d%c", result->yaku[i], " \n"[result->yaku[i + 1]]);
-        }
+    for (int i = 0; i < sizeof(result->yaku) / sizeof(result->yaku[0]); i++){
+        assert(result->yaku[i] == stdYaku[i]);
+        printf("Result Yaku[%d] != stdYaku[%d] (%d)!\n");
     }
-    else if (result->type == TENPAI || result->type == FURITEN) printf("%d\n", result->machi);
-    else printf("%d\n", result->shanten);
+    assert(result->han == -2);
+    // printf("Result Han Error!\n");
+    assert(result->fu == 30);  // 国士无双，不考虑符数
+    assert(result->point[KAMICHA] == 32000);
+    assert(result->point[TOIMEN] == 32000);
+    assert(result->point[SHIMOCHA] == 32000);
+    // printf("Result Point Error!\n");
+    // assert(result->machi == 13);  // 已和牌，不考虑面听数
+    // assert(result->shanten == 0);  // 已和牌，不考虑向听数
+    // if (result->han) {
+    //     printf("%d %d %d\n", result->type, result->han, result->fu);
+    //     for (int i = 0; i < 3; i++) {
+    //         printf("%d%c", result->point[i], " \n"[i == 2]);
+    //     }
+    //     for (int i = 0; result->yaku[i] != 0; i++) {
+    //         printf("%d%c", result->yaku[i], " \n"[result->yaku[i + 1] == 0]);
+    //     }
+    // }
+    // else if (result->type == TENPAI || result->type == FURITEN) printf("%d\n", result->machi);
+    // else printf("%d\n", result->shanten);
     return 0;
 }

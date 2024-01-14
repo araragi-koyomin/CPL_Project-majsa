@@ -844,7 +844,7 @@ void IsSanshokudoukou(Status status, int *yakunum) {
 /// @param status 
 /// @param yakunum 
 void IsChantaiyao(Status status, int *yakunum) {
-    if (!mentsuType.koutsunum + mentsuType.shuntsunum) return false;
+    if (!mentsuType.koutsunum + mentsuType.shuntsunum) return;
     for (int i = 0; i < mentsuType.koutsunum; i++) {
         if (mentsuType.kou[i][0] != im && mentsuType.kou[i][0] != km && mentsuType.kou[i][0] != ip && mentsuType.kou[i][0] != ks && mentsuType.kou[i][0] != is && mentsuType.kou[i][0] != kp &&
             mentsuType.kou[i][0] < east) {
