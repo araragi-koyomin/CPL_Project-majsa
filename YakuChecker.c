@@ -116,7 +116,7 @@ void IsIppatsu(Status status, int *yakunum) {
 /// @param status 
 /// @param yakunum 
 void IsMenzenchintsumohou(Status status, int *yakunum) {
-    if (IsMenzenchin2(status) && resultTemp->type == TSUMO) {
+    if (IsMenzenchin2(status) && status.currentPlayer == JICHA) {
         resultTemp->han++;
         resultTemp->yaku[(*yakunum)++] = Menzenchintsumo;
     }
@@ -257,6 +257,7 @@ void IsYakuhai(Status status, int *yakunum) {
 /// @param yakunum 
 /// @param handTile1 
 bool IsJunseichuurenpoutou(Status status, int *yakunum, int handTile1[]) {
+    if (!mentsuType.koutsunum + mentsuType.shuntsunum) return false;
     int bucket[zhong + 1] = {0}, flag = 0;
     if (!IsMenzenchin1(status)) return false;
     for (int i = 0; i < 14; i++) {
@@ -330,6 +331,7 @@ bool IsSuuankoutanki(Status status, int *yakunum) {
 /// @param yakunum 
 /// @param handTile1 
 void IsKokushimusou(Status status, int *yakunum, int handTile1[]) {
+    if (mentsuType.koutsunum + mentsuType.shuntsunum) return;
     int counts[zhong + 1] = {0}, flag = 1;
     for (int i = 0; i < 14; i++) {
         if (handTile1[i] == im || handTile1[i] == km || handTile1[i] == ip || handTile1[i] == kp || handTile1[i] == is || handTile1[i] >= ks)
@@ -394,6 +396,7 @@ void IsSuuankou(Status status, int *yakunum) {
 /// @param yakunum 
 /// @param handTile1 
 void IsChuurenpoutou(Status status, int *yakunum, int *handTile1) {
+    if (!mentsuType.koutsunum + mentsuType.shuntsunum) return;
     int bucket[zhong + 1] = {0}, flag = 0;
     if (!IsMenzenchin1(status)) {
         for (int i = 0; i < GroupTileLen; i++) {
@@ -568,7 +571,7 @@ void IsDaisangen(Status status, int *yakunum) {
 bool IsChinitsu(Status status, int *yakunum, int *handTile1) {
     int flag = 0;
     for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < GroupTileLen; j++) {
+        for (int j = 0; j < handTilelLen; j++) {
             if (handTile1[j] < im + i * 9 || handTile1[j] > km + 9 * i) {
                 goto NOT;
             }
@@ -620,6 +623,7 @@ bool IsRyanpeikou(Status status, int *yakunum) {
 /// @param yakunum 
 /// @param handTile1 
 bool IsJunchantaiyao(Status status, int *yakunum, int handTile1[]) {
+    if (!mentsuType.koutsunum + mentsuType.shuntsunum) return false;
     for (int i = 0; i < mentsuType.koutsunum; i++) {
         if (mentsuType.kou[i][0] != im && mentsuType.kou[i][0] != km && mentsuType.kou[i][0] != ip && mentsuType.kou[i][0] != ks && mentsuType.kou[i][0] != is && mentsuType.kou[i][0] != kp) {
             return false;
@@ -790,6 +794,7 @@ void IsSanankou(Status status, int *yakunum) {
 /// @param status 
 /// @param yakunum 
 void IsToitoi(Status status, int *yakunum) {
+    if (!mentsuType.koutsunum + mentsuType.shuntsunum) return;
     if (mentsuType.shuntsunum) return;
     if (!IsMenzenchin1(status)) {
         for (int i = 0; i < GroupTileLen; i++) {
@@ -838,6 +843,7 @@ void IsSanshokudoukou(Status status, int *yakunum) {
 /// @param status 
 /// @param yakunum 
 void IsChantaiyao(Status status, int *yakunum) {
+    if (!mentsuType.koutsunum + mentsuType.shuntsunum) return false;
     for (int i = 0; i < mentsuType.koutsunum; i++) {
         if (mentsuType.kou[i][0] != im && mentsuType.kou[i][0] != km && mentsuType.kou[i][0] != ip && mentsuType.kou[i][0] != ks && mentsuType.kou[i][0] != is && mentsuType.kou[i][0] != kp &&
             mentsuType.kou[i][0] < east) {
@@ -964,19 +970,21 @@ bool IsChiitoitsu(Status status, int *yakunum, int handTile1[]) {
 /// @param groupTile1 
 /// @param dora1 
 void AddDora(Status status, int *handTile1, GroupInt *groupTile1, int *dora1) {
-    for (int i = 0; i < GroupTileLen; i++) {
-        for (int j = 0; j < doraLen; i++) {
+    for (int i = 0; i < handTilelLen; i++) {
+        for (int j = 0; j < doraLen; j++) {
+            int nextTile;
             if (dora1[j] < east) {
-                if (dora1[j] % 9 + dora1[j] / 9 + 1 == handTile1[i]) {
-                    resultTemp->han++;
+                nextTile = (dora1[j] % 9 == 0) ? dora1[j] - 8 : dora1[j] + 1;
+            } else {
+                if (dora1[j] == north) {
+                    nextTile = east;
+                } else if (dora1[j] == zhong) {
+                    nextTile = bai;
+                } else {
+                    nextTile = dora1[j] + 1;
                 }
-            } else if (dora1[j] < north && dora1[j] + 1 == handTile1[i]) {
-                resultTemp->han++;
-            } else if (dora1[j] == north && handTile1[i] == east) {
-                resultTemp->han++;
-            } else if (dora1[j] < zhong && dora1[j] + 1 == handTile1[i]) {
-                resultTemp->han++;
-            } else if (dora1[j] == zhong && handTile1[i] == bai) {
+            }
+            if (nextTile == handTile1[i]) {
                 resultTemp->han++;
             }
         }
@@ -985,17 +993,17 @@ void AddDora(Status status, int *handTile1, GroupInt *groupTile1, int *dora1) {
         for (int i = 0; i < GroupTileLen; i++) {
             for (int k = 0; k < GroupEachLen[i]; k++) {
                 for (int j = 0; j < doraLen; j++) {
+                    int nextTile;
                     if (dora1[j] < east) {
-                        if (dora1[j] % 9 + dora1[j] / 9 + 1 == groupTile1[i].groupHaiInt[k]) {
-                            resultTemp->han++;
-                        }
-                    } else if (dora1[j] < north && dora1[j] + 1 == groupTile1[i].groupHaiInt[k]) {
-                        resultTemp->han++;
-                    } else if (dora1[j] == north && groupTile1[i].groupHaiInt[k] == east) {
-                        resultTemp->han++;
-                    } else if (dora1[j] < zhong && dora1[j] + 1 == groupTile1[i].groupHaiInt[k]) {
-                        resultTemp->han++;
-                    } else if (dora1[j] == zhong && groupTile1[i].groupHaiInt[k] == bai) {
+                        nextTile = (dora1[j] % 9 == 0) ? dora1[j] - 8 : dora1[j] + 1;
+                    }
+                    else if (dora1[j] <= north) {
+                        nextTile = (dora1[j] == north) ? east : dora1[j] + 1;
+                    }
+                    else {
+                            nextTile = (dora1[j] == zhong) ? bai : dora1[j] + 1;
+                    }
+                    if (nextTile == groupTile1[i].groupHaiInt[k]) {
                         resultTemp->han++;
                     }
                 }
@@ -1012,18 +1020,20 @@ void AddDora(Status status, int *handTile1, GroupInt *groupTile1, int *dora1) {
 /// @param uradora1 
 void AddUradora(Status status, int *handTile1, GroupInt *groupTile1, int *uradora1) {
     for (int i = 0; i < handTilelLen; i++) {
-        for (int j = 0; j < doraLen; i++) {
+        for (int j = 0; j < doraLen; j++) {
+            int nextTile;
             if (uradora1[j] < east) {
-                if (uradora1[j] % 9 + uradora1[j] / 9 + 1 == handTile1[i]) {
-                    resultTemp->han++;
+                nextTile = (uradora1[j] % 9 == 0) ? uradora1[j] - 8 : uradora1[j] + 1;
+            } else {
+                if (uradora1[j] == north) {
+                    nextTile = east;
+                } else if (uradora1[j] == zhong) {
+                    nextTile = bai;
+                } else {
+                    nextTile = uradora1[j] + 1;
                 }
-            } else if (uradora1[j] < north && uradora1[j] + 1 == handTile1[i]) {
-                resultTemp->han++;
-            } else if (uradora1[j] == north && handTile1[i] == east) {
-                resultTemp->han++;
-            } else if (uradora1[j] < zhong && uradora1[j] + 1 == handTile1[i]) {
-                resultTemp->han++;
-            } else if (uradora1[j] == zhong && handTile1[i] == bai) {
+            }
+            if (nextTile == handTile1[i]) {
                 resultTemp->han++;
             }
         }
@@ -1032,17 +1042,17 @@ void AddUradora(Status status, int *handTile1, GroupInt *groupTile1, int *urador
         for (int i = 0; i < GroupTileLen; i++) {
             for (int k = 0; k < GroupEachLen[i]; k++) {
                 for (int j = 0; j < doraLen; j++) {
+                    int nextTile;
                     if (uradora1[j] < east) {
-                        if (uradora1[j] % 9 + uradora1[j] / 9 + 1 == groupTile1[i].groupHaiInt[k]) {
-                            resultTemp->han++;
-                        }
-                    } else if (uradora1[j] < north && uradora1[j] + 1 == groupTile1[i].groupHaiInt[k]) {
-                        resultTemp->han++;
-                    } else if (uradora1[j] == north && groupTile1[i].groupHaiInt[k] == east) {
-                        resultTemp->han++;
-                    } else if (uradora1[j] < zhong && uradora1[j] + 1 == groupTile1[i].groupHaiInt[k]) {
-                        resultTemp->han++;
-                    } else if (uradora1[j] == zhong && groupTile1[i].groupHaiInt[k] == bai) {
+                        nextTile = (uradora1[j] % 9 == 0) ? uradora1[j] - 8 : uradora1[j] + 1;
+                    }
+                    else if (uradora1[j] <= north) {
+                        nextTile = (uradora1[j] == north) ? east : uradora1[j] + 1;
+                    }
+                    else {
+                            nextTile = (uradora1[j] == zhong) ? bai : uradora1[j] + 1;
+                    }
+                    if (nextTile == groupTile1[i].groupHaiInt[k]) {
                         resultTemp->han++;
                     }
                 }

@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "main.h": "c",
-        "trans.h": "c",
-        "agarichecker.h": "c",
-        "basictype.h": "c",
-        "yakuchecker.h": "c"
-    }
-}
