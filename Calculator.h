@@ -8,7 +8,7 @@ void CalFu(Status status, int handTile[], GroupInt groupTile1[]);
 
 void CalPoi(Status status);
 
-void Calculator(Status status, int handTile1[], GroupInt groupTile1[]);
+void Calculator(Status status, int handTile2[], GroupInt groupTile1[]);
 
 ///////////////////////////////////////辅助用函数///////////////////////
 

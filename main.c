@@ -2,7 +2,7 @@
 #include "majsa.h"
 
 GroupInt groupTile1[30];
-int handTile1[14], discardTile1[30], currentTile1, uradora1[6], dora1[6];
+int handTile1[14], discardTile1[30], currentTile1, uradora1[6], dora1[6], handTile2[14];
 int Fan, Dora, Fu;
 MentsuType mentsuType;
 int handTilelLen, GroupTileLen, GroupEachLen[30], doraLen, DisLen;

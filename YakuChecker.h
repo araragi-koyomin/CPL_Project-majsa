@@ -21,7 +21,7 @@ void IsHouteiraoyui(Status status, int *yakunum);
 
 void IsRinshankaihou(Status status, int *yakunum);
 
-void IsTanyao(Status status, int *yakunum, int *handTile1);
+void IsTanyao(Status status, int *yakunum, int *handTile2);
 
 void IsYakuhai(Status status, int *yakunum);
 
@@ -39,21 +39,21 @@ void IsSanankou(Status status, int *yakunum);
 
 void IsSankantsu(Status status, int *yakunum);
 
-bool IsChiitoitsu(Status status, int *yakunum, int handTile1[]);
+bool IsChiitoitsu(Status status, int *yakunum, int handTile2[]);
 
-void IsHonroutou(Status status, int *yakunum, int *handTile1);
+void IsHonroutou(Status status, int *yakunum, int *handTile2);
 
 void IsShousangan(Status status, int *yakunum);
 
-void IsHonitsu(Status status, int *yakunum, int handTile1[]);
+void IsHonitsu(Status status, int *yakunum, int handTile2[]);
 
-bool IsJunchantaiyao(Status status, int *yakunum, int handTile1[]);
+bool IsJunchantaiyao(Status status, int *yakunum, int handTile2[]);
 
 bool IsRyanpeikou(Status status, int *yakunum);
 
-bool IsChinitsu(Status status, int *yakunum, int *handTile1);
+bool IsChinitsu(Status status, int *yakunum, int *handTile2);
 
-void IsKokushimusou(Status status, int *yakunum, int handTile1[]);
+void IsKokushimusou(Status status, int *yakunum, int handTile2[]);
 
 void IsSuuankou(Status status, int *yakunum);
 
@@ -61,13 +61,13 @@ void IsDaisangen(Status status, int *yakunum);
 
 void IsShousuushii(Status status, int *yakunum);
 
-void IsTsuiisou(Status status, int *yakunum, int handTile1[]);
+void IsTsuiisou(Status status, int *yakunum, int handTile2[]);
 
-void IsChinroutou(Status status, int *yakunum, int handTile1[]);
+void IsChinroutou(Status status, int *yakunum, int handTile2[]);
 
-void IsRyuuiisou(Status status, int *yakunum, int *handTile1);
+void IsRyuuiisou(Status status, int *yakunum, int *handTile2);
 
-void IsChuurenpoutou(Status status, int *yakunum, int *handTile1);
+void IsChuurenpoutou(Status status, int *yakunum, int *handTile2);
 
 void IsSuukantsu(Status status, int *yakunum);
 
@@ -79,15 +79,15 @@ bool IsSuuankoutanki(Status status, int *yakunum);
 
 void IsDaisuushii(Status status, int *yakunum);
 
-bool IsJunseichuurenpoutou(Status status, int *yakunum, int handTile1[]);
+bool IsJunseichuurenpoutou(Status status, int *yakunum, int handTile2[]);
 
-void YakuCheck(Status status, int handTile1[], GroupInt groupTile1[], int discardTile1[], int currentTile);
+void YakuCheck(Status status, int handTile2[], GroupInt groupTile1[], int discardTile1[], int currentTile);
 
 ///////////////////////////////////////////////////////上面为役，下面为宝牌///////////////////////////////////////////////////////////////////
 
-void AddDora(Status status, int *handTile1, GroupInt *groupTile1, int *dora1);
+void AddDora(Status status, int *handTile2, GroupInt *groupTile1, int *dora1);
 
-void AddUradora(Status status, int *handTile1, GroupInt *groupTile1, int *uradora1);
+void AddUradora(Status status, int *handTile2, GroupInt *groupTile1, int *uradora1);
 
 ///////////////////////////////////////////////////////下面为是否门前清的两个函数//////////////////////////////////////////////////////////////
 

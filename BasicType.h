@@ -156,7 +156,7 @@ enum hailist
 };
 typedef enum hailist HaiList;
 
-extern int handTile1[14], discardTile1[30], currentTile1, uradora1[6], dora1[6];
+extern int handTile1[14], discardTile1[30], currentTile1, uradora1[6], dora1[6], handTile2[14];
 
 extern int Fan, Dora, Fu;
 

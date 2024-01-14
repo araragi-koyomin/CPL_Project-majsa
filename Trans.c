@@ -12,27 +12,35 @@ void HaiTrans(Status status)
             if (status.handTile[i + 1] == 'm')
             {
                 handTile1[i / 2] = gm;
+                handTile2[i / 2] = gm;
                 Dora++;
             }
             else if (status.handTile[i + 1] == 'p')
             {
-                handTile1[i / 2] = gp;
+                handTile1[i / 2] = gm;
+                handTile2[i / 2] = gm;
                 Dora++;
             }
             else if (status.handTile[i + 1] == 's')
             {
                 handTile1[i / 2] = gs;
+                handTile2[i / 2] = gs;
                 Dora++;
             }
         }
-        else if (status.handTile[i + 1] == 'm')
+        else if (status.handTile[i + 1] == 'm') {
             handTile1[i / 2] = status.handTile[i] - '1' + im;
-        else if (status.handTile[i + 1] == 'p')
+            handTile2[i / 2] = status.handTile[i] - '1' + im;
+        } else if (status.handTile[i + 1] == 'p') {
             handTile1[i / 2] = status.handTile[i] - '1' + ip;
-        else if (status.handTile[i + 1] == 's')
+            handTile2[i / 2] = status.handTile[i] - '1' + ip;
+        } else if (status.handTile[i + 1] == 's') {
             handTile1[i / 2] = status.handTile[i] - '1' + is;
-        else if (status.handTile[i + 1] == 'z')
+            handTile2[i / 2] = status.handTile[i] - '1' + is;
+        } else if (status.handTile[i + 1] == 'z') {
             handTile1[i / 2] = status.handTile[i] - '1' + east;
+            handTile2[i / 2] = status.handTile[i] - '1' + east;
+        }
     }
     // 牌河转换
     for (int i = 0; i < strlen(status.discardTile); i += 2)

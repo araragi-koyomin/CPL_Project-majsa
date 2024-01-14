@@ -198,7 +198,7 @@ bool FindShuntsu(int handTile1[], int index, int mentsu, int *discardTile1, int 
         if (handTile1[i] == 0)
             checkIfZero++;
     if (checkIfZero == 14) {
-        YakuCheck(status, handTile1, groupTile1, discardTile1, currentTile1);
+        YakuCheck(status, handTile2, groupTile1, discardTile1, currentTile1);
         if (resultTemp->han)
         {
             // result = (result->point[0] + result->point[1] + result->point[2]) > (resultTemp->point[0] + resultTemp->point[1] + resultTemp->point[2]) ? result : resultTemp;
@@ -295,7 +295,7 @@ bool FindKoutsu(int handTile1[], int index, int mentsu, int *discardTile1, int c
         if (handTile1[i] == 0)
             checkIfZero++;
     if (checkIfZero == 14) {
-        YakuCheck(status, handTile1, groupTile1, discardTile1, currentTile1);
+        YakuCheck(status, handTile2, groupTile1, discardTile1, currentTile1);
         if (resultTemp->han)
         {
             // result = (result->point[0] + result->point[1] + result->point[2]) > (resultTemp->point[0] + resultTemp->point[1] + resultTemp->point[2]) ? result : resultTemp;
