@@ -833,6 +833,18 @@ void CalPoi(Status status) {
     }
 }
 
+/// @brief 计算场供带来的收益
+/// @param status 
+void CalHonba(Status status) {
+    if (result->type == RON) {
+        resultTemp->point[status.currentPlayer] += 300 * status.honbaCount;
+    } else {
+        for (int i = KAMICHA; i <= SHIMOCHA; i++) {
+            resultTemp->point[i] += 100 * status.honbaCount;
+        }
+    }
+}
+
 /// @brief 计算符数点数
 /// @param status 
 /// @param handTile2 
@@ -840,6 +852,7 @@ void CalPoi(Status status) {
 void Calculator(Status status, int handTile2[], GroupInt groupTile1[]) {
     CalFu(status, handTile2, groupTile1);
     CalPoi(status);
+    CalHonba(status);
 }
 
 bool IsMenzenchin3(const Status status)

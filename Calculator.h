@@ -10,6 +10,8 @@ void CalPoi(Status status);
 
 void Calculator(Status status, int handTile2[], GroupInt groupTile1[]);
 
+void CalHonba(Status status);
+
 ///////////////////////////////////////辅助用函数///////////////////////
 
 bool IsMenzenchin3(const Status status);
