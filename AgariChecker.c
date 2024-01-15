@@ -1,5 +1,6 @@
 #include "AgariChecker.h"
 #include "YakuChecker.h"
+#include "majsa.h"
 
 int isMachi[zhong + 1];
 
@@ -90,7 +91,6 @@ bool IsAgari(int handTile1[], int needMentsu, int *discardTile1, int currentTile
             // 再找出4个面子
             int mentsu = 0;
             if (FindShuntsu(handTile1, 0, mentsu, discardTile1, currentTile1, status, bucket, needMentsu) || FindKoutsu(handTile1, 0, mentsu, discardTile1, currentTile1, status, bucket, needMentsu)) {
-                printf("*");
                 flag = 1;
             }
             handTile1[i] = tmp1, handTile1[i + 1] = tmp2;

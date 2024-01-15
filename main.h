@@ -4,10 +4,7 @@
 
 #include "BasicType.h"
 #include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
 #include <assert.h>
-#include <stdio.h>
 
 struct status {
     KazeType bakaze;       // 场风
