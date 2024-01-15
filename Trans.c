@@ -169,7 +169,7 @@ void HaiTrans(Status status)
         else if (status.currentTile[i + 1] == 'z')
             currentTile1 = status.currentTile[i] - '1' + east;
     }
-    for (int i = 0; i < 13; i++) {
+    for (int i = 0; i <= 13; i++) {
         if (handTile1[i] == 0) {
             handTile1[i] = currentTile1;
             handTile2[i] = currentTile1;

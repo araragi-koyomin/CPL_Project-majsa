@@ -1,69 +1,28 @@
 #include "main.h"
 #include "majsa.h"
 
-GroupInt groupTile1[30];
-int handTile1[14], discardTile1[30], currentTile1, uradora1[6], dora1[6], handTile2[14];
-int Fan, Dora, Fu;
-MentsuType mentsuType;
-int handTilelLen, GroupTileLen, GroupEachLen[30], doraLen, DisLen;
-Result *resultTemp, *result;
 
 int main(){
     Status status = {
-      .bakaze = NAN,
+      .bakaze = TON,
       .jikaze = NAN,
       .honbaCount = 0,
-      .dora="7p",
+      .dora="5z",
       .uradora="",
-      .handTile="4s5s6s6s7s7s8s8s2z2z",
+      .handTile="4p5p6p7p8p9p6s6s5z5z",
       .groupTile={{Koutsu, "6z6z6z"}},
-      .discardTile="1m9m9m2p8p1z7z8s6z6p2s1s",
-      .currentPlayer=SHIMOCHA,
-      .currentTile="6s",
-      .remainTileCount=18,
+      .discardTile="1m5p2z6z8p4p7p",
+      .currentPlayer=KAMICHA,
+      .currentTile="5z",
+      .remainTileCount=33,
       .isRiichi=false,
       .isDoubleRiichi=false,
       .isIppatsu=false,
       .isRinshan=false,
     };
-    // 为 result 分配内存
-    result = (Result *)malloc(sizeof(Result));
+    
 
-    if (result == NULL) {
-        return -1;
-    }
-
-    result->type = 5;
-    for (int i = 0; i < 20; i++) {
-        result->yaku[i] = 0;
-    }
-    result->han = 0;
-    result->fu = 0;
-    for (int i = 0; i < 3; i++) {
-        result->point[i] = 0;
-    }
-    result->machi = 0;
-    result->shanten = 0;
-
-    resultTemp = (Result *)malloc(sizeof(Result));
-
-    if (resultTemp == NULL) {
-        return -1;
-    }
-
-    resultTemp->type = 5;
-    for (int i = 0; i < 20; i++) {
-        resultTemp->yaku[i] = 0;
-    }
-    resultTemp->han = 0;
-    resultTemp->fu = 0;
-    for (int i = 0; i < 3; i++) {
-        resultTemp->point[i] = 0;
-    }
-    resultTemp->machi = 0;
-    resultTemp->shanten = 0;
-
-    result = majsa(&status);
+    Result *result = majsa(&status);
     assert(result->type == RON);
     // printf("Result Type error!\n");
     Yaku stdYaku[2] = {YakuhaiHaku, HonitsuF};

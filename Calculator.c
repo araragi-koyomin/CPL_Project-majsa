@@ -30,11 +30,11 @@ void CalFu(Status status, int handTile2[], GroupInt groupTile1[]) {
     // 底符
     resultTemp->fu += 20;
     // 门前清荣和
-    if (IsMenzenchin4(status) && result->type == RON) {
+    if (IsMenzenchin4(status) && resultTemp->type == RON) {
         resultTemp->fu += 10;
     }
     // 自摸和
-    if (result->type = TSUMO) {
+    if (resultTemp->type == TSUMO) {
         resultTemp->fu += 2;
     }
 

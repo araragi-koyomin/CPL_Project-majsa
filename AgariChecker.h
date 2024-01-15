@@ -26,4 +26,6 @@ bool Is7gTennpai(int handTile1[], int *discardTile1, int currentTile1, Status st
 
 // void FindMinusShanten();
 
+extern int isMachi[zhong + 1];
+
 #endif //AGARICHECKER_H
